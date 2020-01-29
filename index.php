@@ -17,6 +17,9 @@
         <li>
             <a href="/4-numbers">Numbers</a>
         </li>
+        <li>
+            <a href="/5-booleans">Booleans</a>
+        </li>
     </ul>
 </body>
 </html>
