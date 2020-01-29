@@ -45,4 +45,68 @@ echo $rewriteVariable;
 ```php
 echo $text = 'There are ' . $daysInWeek . ' in a week.';
 ```
+#### Main Data types we can work with in PHP 
+
+1. Boolean
+    * true
+
+    * false
+
+2. integer
+    
+    * 12345
+
+3. Floating point 
+    * 3.15
+
+4. Array
+    * ['john', 'joe']
+
+5. Object
+    * {}
+
+6. Resource
+    * Basically something that returns when you upen up a file with php
+
+7. NULL
+
+8. Callback/ Callable
+
+### Strings
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
