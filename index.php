@@ -14,6 +14,9 @@
         <li>
             <a href="/3-strings">Strings</a>
         </li>
+        <li>
+            <a href="/4-numbers">Numbers</a>
+        </li>
     </ul>
 </body>
 </html>

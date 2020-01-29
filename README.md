@@ -129,11 +129,37 @@ echo "<a href=\"https://www.google.com\">Link</a>";
 echo '<a href="https://www.google.com">Link</a>';
 ```
 
+### The numbers: Integers and floats
 
+1. Integers
+```php
+$daysInWeek = 7;
+$daysInWeek = 0;
+$daysInWeek = -100;
+```
+2. Floats are similar they any number with decimal point
 
+3. They are know as floating point integers, doubles or real numbers
+4. But most of the time they called floats
+5. a Good example is Pi
+```php
+$pi =3.141;
+```
+6. We can perform calculations with numbers + / - * etc
+7. You can define big numbers with e example
+```php
+    $bankBalance = 1.2e6
 
+    echo $bankBalance;
+    // 1,200,000
+```
+8. There are certain data types that we can't echo out.
 
+9. But the numbers are just changed to string when you use echo
 
-
+10. We can also concatinate float values and integers values.
+```php
+    echo 'Your bank balance is $' . $bankBalance;
+```
 
 
