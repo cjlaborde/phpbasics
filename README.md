@@ -53,7 +53,6 @@ echo $text = 'There are ' . $daysInWeek . ' in a week.';
     * false
 
 2. integer
-    
     * 12345
 
 3. Floating point 
@@ -74,33 +73,61 @@ echo $text = 'There are ' . $daysInWeek . ' in a week.';
 
 ### Strings
 
+1. Choose a standard of `$name = 'john';` or `$name = "john";`
+2. you can also store number` $name = '7';`
+3. Now if you want to use single quotes between a string
+```php
+$message = 'It's a lovely day today';
+```
+4. To solve issue use  '\' which tell php we should not consider next ' as literal string
+```php
+echo $message = 'It\'s a lovely day today';
+```
+
+5. Alternative you can use double quotes "
+```php
+echo $message = "It's a lovely day today";
+```
+
+6. Same issue if you have double quotes
+```php
+$message = "He said "learning PHP is great";
+```
+
+7. 
+```php
+echo $message = "He said \"learning PHP is great\"";
+```
 
 
+8. You can fix it by using ' instead
+```php
+echo $message = "He said 'learning PHP is great'";
+```
+9. You should usually use save coding standard, yet, if it makes things easier then use both.
+```php
+$name = 'john';
 
+$message = $name . ' said "learning PHP is great".';
 
+echo $message;
+```
 
+10. another situation we use both is when we use a link tag.
 
+11. will get error
+```php
+    echo "<a href="https://www.google.com/">Link</a>";
+```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+12. Works but does not looks clean.
+```php
+echo "<a href=\"https://www.google.com\">Link</a>";
+```
+13. With both different quotes types lookes better
+```php
+echo '<a href="https://www.google.com">Link</a>';
+```
 
 
 

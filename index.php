@@ -9,10 +9,10 @@
 <body>
     <ul>
         <li>
-            <a href="/variables">Variables</a>
+            <a href="/1-variables">Variables</a>
         </li>
         <li>
-            <a href="/strings">Strings</a>
+            <a href="/3-strings">Strings</a>
         </li>
     </ul>
 </body>
