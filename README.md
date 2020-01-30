@@ -6,6 +6,7 @@
     - [Strings](#strings)
     - [The numbers: Integers and floats](#the-numbers-integers-and-floats)
     - [Booleans](#booleans)
+    - [Array basics](#array-basics)
 
 ### Variables
 1. String
@@ -288,4 +289,64 @@ var_dump(is_int(1));
 ```
 28. var_dump is great since it give us an insight of type of values we working with
 
+### Array basics
+> Arrays are data types that allow for multiple values, to be store within 1 value.
+
+> These values can be mixed data types you can store string, integer, float, boolean inside an array.
+
+> Purpose of array is been able to store multiple values. without having to create variable for each value.
+
+> This allow you to organize the data and later allow you to iterate over these values, allow you to count them, add them and anything else you want it to do.
+
+1. Here is a basic array, list of different names
+2. instead of doing.
+```php
+$names1 = 'john';
+$names1 = 'joe';
+```
+3. We want to conveniently store it in 1 value.
+```php
+$names = ['john', 'joe', 'leonardo', 7];
+
+echo $names; // Array
+```
+4. Lets use var_dump to see values inside an array.
+5. What it says here is we have an array with 4 items in it.
+6. First item is 0 since this is what we call Zero Index
+7. First value is a string with 4 characters, string(4)
+8. As well we have our index 3 which is an int with value 7, [3]=> int(7)
+```php
+var_dump($names); // array(4) { [0]=> string(4) "john" [1]=> string(3) "joe" [2]=> string(8) "leonardo" [3]=> int(7) }
+```
+9. Now lets output first name
+```php
+echo $names[0]; // john
+```
+10. Error: Undefined since there is no value at that position
+```php
+echo $names[5]; echo '<br>'; // Error: Notice: Undefined offset: 5
+```
+11. We can also loop through array to asses each value in the loop.
+12. What happens if I want to add items to array.
+13. For example we have add if statement that if it evaluate to true we can add it to $names array
+14. We going to assign new value to array
+```php
+$names[] = 'justin';
+```
+15. Lets see the content of the array 
+```php
+var_dump($names);
+/*
+array (size=5)
+  0 => string 'john' (length=4)
+  1 => string 'joe' (length=3)
+  2 => string 'leonardo' (length=8)
+  3 => int 7
+  4 => string 'justin' (length=6)
+*/
+```
+16. Now we can output that value since is part of the array.
+```php
+echo $names[5]; // justin
+```
 

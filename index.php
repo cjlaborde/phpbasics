@@ -8,18 +8,11 @@
 </head>
 <body>
     <ul>
-        <li>
-            <a href="/1-variables">Variables</a>
-        </li>
-        <li>
-            <a href="/3-strings">Strings</a>
-        </li>
-        <li>
-            <a href="/4-numbers">Numbers</a>
-        </li>
-        <li>
-            <a href="/5-booleans">Booleans</a>
-        </li>
+        <li><a href="/1-variables">Variables</a></li>
+        <li><a href="/3-strings">Strings</a></li>
+        <li><a href="/4-numbers">Numbers</a></li>
+        <li><a href="/5-booleans">Booleans</a></li>
+        <li><a href="/6-arrays">Arrays</a></li>
     </ul>
 </body>
 </html>
