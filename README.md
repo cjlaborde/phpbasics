@@ -11,6 +11,9 @@
       - [Basics of Arrays resume](#basics-of-arrays-resume)
       - [Index Types, Multi dimensional arrays, array functions build into php](#index-types-multi-dimensional-arrays-array-functions-build-into-php)
     - [NULL](#null)
+    - [Concatination](#concatination)
+      - [Now we we look into variable parting an alternative to concatination.](#now-we-we-look-into-variable-parting-an-alternative-to-concatination)
+      - [Other alternative when we echo things out is using a comma ,](#other-alternative-when-we-echo-things-out-is-using-a-comma-)
 
 ### Variables
 1. String
@@ -760,6 +763,129 @@ var_dump($name);
 $name = null;
 ```
 13. Which mean variable does exist and you will not see error message and see just Null output instead.
+
+### Concatination
+
+1. Lets say we have simple variable called weather
+```php
+echo 'The current weather is ';
+echo $weather;
+
+// The current weather is sunny
+
+```
+2. Instead we can concatinate using a dot . we get exact same result.
+```php
+'The current weather is ' . $weather;
+
+//The current weather is sunny
+```
+3. You can also add multiple variables and sentences.
+```php
+$weather = 'sunny';
+
+$degrees = 30.5;
+
+$status = 'The current weather is ' . $weather . ' and it\'s ' . $degrees . ' degress';
+
+echo $status;
+
+// The current weather is sunny and it's 30 degress
+
+```
+
+4. php will convert all into a single string including integers and float values
+```php
+var_dump($status);
+
+string 'The current weather is sunny and it's 30.5 degress' (length=50)
+```
+
+#### Now we we look into variable parting an alternative to concatination.
+1. just type the variables inside.
+```php
+echo $status = 'The current weather is $weather and it'/s $degrees degress';
+// The current weather is $weather and it's $degrees degress
+``` 
+
+2. If we use double quotes instead PHP does convert the variables.
+```php
+echo $status = "The current weather is $weather and it's $degrees degress";
+// The current weather is sunny and it/'s 30.5 degress
+``` 
+
+3. You can also put them inside {} and get same result
+```php
+echo $status = "The current weather is {$weather} and it's {$degrees} degress";
+// The current weather is sunny and it/'s 30.5 degress
+```
+
+4. Reason we use  {} is because PHP doesn't know when the variable stats and when the variable ends.
+
+5. What if we add symnbo like degree symbol o it will fail. (php seems to reconigze other symbols like # or $)
+```php
+echo $status = "The current weather is $weather and it's $degreeso degress";
+// Undefined variable: degreeso
+
+```
+6. If ou use {} it works correctly
+```php
+echo $status = "The current weather is {$weather} and it's {$degrees}o degress";
+```
+
+#### Other alternative when we echo things out is using a comma ,
+1. Using a comma only works with echo
+```php
+$name = 'John';
+
+echo 'My name is ', $name;
+// My name is John.
+```
+2. Is a way to chain many strings to build a string as you echo out.
+3. It will not work when declaring a variable
+```php
+
+$name = 'John';
+
+$text = 'My name is ', $name;
+
+// Parse error: syntax error, unexpected ',' in
+```
+
+4. Instead we should use a dot instead.
+
+```php
+$name = 'John';
+
+$text = 'My name is ' . $name;
+// My name is John
+
+```
+
+5. Good practice to use . dots instead of commas no matter if you use echo or not.
+
+6. As well when code start to get complicated use "" double quotes instead and when needed curly brackets "".
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

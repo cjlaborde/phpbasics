@@ -15,6 +15,7 @@
         <li><a href="/6-arrays">Arrays</a></li>
         <li><a href="/7-diving-into-arrays">Diving into arrays</a></li>
         <li><a href="/8-null">NULL</a></li>
+        <li><a href="/9-concatination">Concatination</a></li>
     </ul>
 </body>
 </html>
