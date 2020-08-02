@@ -14,6 +14,10 @@
     - [Concatination](#concatination)
       - [Now we we look into variable parting an alternative to concatination.](#now-we-we-look-into-variable-parting-an-alternative-to-concatination)
       - [Other alternative when we echo things out is using a comma ,](#other-alternative-when-we-echo-things-out-is-using-a-comma-)
+    - [If Statement Basics](#if-statement-basics)
+      - [Nesting If statements](#nesting-if-statements)
+      - [Inversion Operator](#inversion-operator)
+      - [check which values will run true or not](#check-which-values-will-run-true-or-not)
 
 ### Variables
 1. String
@@ -866,11 +870,248 @@ $text = 'My name is ' . $name;
 
 6. As well when code start to get complicated use "" double quotes instead and when needed curly brackets "".
 
+### If Statement Basics
+> If Statements can Control the flow of your aplication by checking a certain condition. Then running code
+> when ever that condition evaluate to true or false.
 
+1. You have to be careful with what you use to compare when you do an if statement, you can't use =
+```php
+$dayOfWeek = 1;
 
+if ($dayfWeek = 2) {
 
+}
 
+echo $dayfWeek; // 2
+```
 
+2. You should use  == or === (also compares types)
+```php
+$dayOfWeek = 1;
+
+if ($dayOfWeek == 1) {
+  echo 'It is Monday.';
+}
+// It is Monday. 
+```
+
+3. If it false returns nothing
+```php
+$dayOfWeek = 2;
+
+if ($dayOfWeek == 1) {
+  echo 'It is Monday.';
+}
+```
+
+4. Using else statement
+```php
+$dayOfWeek = 2;
+
+if ($dayOfWeek == 1) {
+  echo 'It is Monday.';
+} else {
+    echo 'It is NOT Monday';
+}
+
+// It is NOT Monday
+```
+
+5. Using elseif to chain together conditions, Yet this is not efficient and we will use more efficient way next.
+```php
+$dayOfWeek = 5;
+
+if ($dayOfWeek == 1) {
+  echo 'It is Monday.';
+} elseif ($dayOfWeek == 2) {
+  echo 'It is Tuesday.';
+} elseif ($dayOfWeek == 3) {
+  echo 'It is Wednedays';
+} else {
+  echo 'It is not a valid day.';
+} 
+// It is not a valid day.
+```
+
+6. Now we will use an array and use array_keys, which create new array with just keys
+```php
+$daysOfWeek = [
+    1 => 'Monday',
+    2 => 'Tuesday',
+    3 => 'Wednesday'
+];
+
+var_dump(array_keys($daysOfWeek));
+/*
+
+array (size=3)
+  0 => int 1
+  1 => int 2
+  2 => int 3
+
+*/
+```
+7. Now we will use if statement with in_array and array keys
+8. We will take $dayOfWeek and compare it to see if is inside the new array that has only keys with in_array 
+```php
+$dayOfWeek = 1; 
+
+$daysOfWeek = [
+    1 => 'Monday',
+    2 => 'Tuesday',
+    3 => 'Wednesday'
+];
+
+if (in_array($dayOfWeek, array_keys($daysOfWeek))) {
+  echo $daysOfWeek[$dayOfWeek];
+} else {
+    echo 'That is not a valid day';
+}
+```
+
+#### Nesting If statements
+1. Here we nest an if statement inside another.
+```php
+$name = 'Alexander James Garrett';
+
+if ($name) {
+    echo 'Your name is ' . $name;
+
+    if (strlen($name) > 10) {
+        echo ' Oh you have a long name';
+    }
+}
+// Your name is Alexander James Garrett Oh you have a long name
+```
+
+2. Now with short name.
+```php
+$name = 'Alex';
+
+if ($name) {
+    echo 'Your name is ' . $name;
+
+    if (strlen($name) > 10) {
+        echo ' Oh you have a long name';
+    }
+}
+// Your name is Alex
+```
+3. You can nest inside an if as many times as needed but makes code hard to read and maintain.
+```php
+$name = 'Alex';
+
+if ($name) {
+    echo 'Your name is ' . $name;
+
+    if (strlen($name) > 10) {
+        echo ' Oh you have a long name';
+         if (strlen($name) > 10) {
+           echo ' Oh you have a long name';
+            if (strlen($name) > 10) {
+              echo ' Oh you have a long name';
+            }
+         }
+    }
+}
+
+```
+4. Here is a way to write the same but make it a lot more cleaner using inversion operator
+  
+#### Inversion Operator
+1. First we going to do is check if we don't have a name and do not do anything.
+```php
+$name = 'Alex';
+
+if (!$name) {
+    return; // returns breaks the execution of the code if name is no name.
+}
+
+echo 'Hello'; // Hello
+```
+
+2. Now without name, returns nothing since code stop running after the return.
+```php
+$name = null;
+
+if (!$name) {
+    return; // returns breaks the execution of the code if name is no name.
+}
+
+echo 'Hello'; //
+
+```
+
+3. Here is more efficient cleaner way alternative to nesting which you should not use often.
+```php
+
+$name = 'Alexander James Garrett';
+
+if (!$name) {
+    return; // returns breaks the execution of the code if name is no name.
+}
+
+echo 'Your name is ' . $name . '.';
+
+if (strlen($name) > 10) {
+    echo ' Oh, and you have a long name.';
+}
+// Your name is Alexander James Garrett. Oh, and you have a long name.
+```
+
+#### check which values will run true or not
+
+1. true will always run the code and false will not
+```php
+if (true) {
+  echo 'This will alwas run when set to true or boolean 1';
+}
+// This will alwas run when set to true or boolean 1
+
+if (false) {
+  echo 'This will not run when set to false or boolean 0';
+}
+//
+
+```
+2. Same with Numbers
+```php
+if (1) {
+  echo 'This will alwas run when set to true or boolean 1';
+}
+// This will alwas run when set to true or boolean 1
+
+if (0) {
+  echo 'This will not run when set to false or boolean 0';
+}
+```
+3. what if the value negative?
+```php
+
+if (-5) {
+  echo 'This will not run when set to false or boolean 0';
+}
+// This will not run when set to false or boolean 0
+```
+4. Above ran even if it negative. It is important to know that
+```php
+if (5) {
+  echo 'will it run';
+}
+// will run
+
+if (0) {
+  echo 'will it run';
+}
+//
+if (-5) {
+  echo 'will run';
+}
+// will run
+
+```
+5. Is important to know this because when you using variable in if statement is important to know what you working with.
+6. You can do that using var_dump()
 
 
 
