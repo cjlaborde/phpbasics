@@ -10,6 +10,7 @@
     - [Diving into arrays](#diving-into-arrays)
       - [Basics of Arrays resume](#basics-of-arrays-resume)
       - [Index Types, Multi dimensional arrays, array functions build into php](#index-types-multi-dimensional-arrays-array-functions-build-into-php)
+    - [NULL](#null)
 
 ### Variables
 1. String
@@ -114,7 +115,7 @@ echo $message = "He said \"learning PHP is great\"";
 ```php
 echo $message = "He said 'learning PHP is great'";
 ```
-9. You should usually use save coding standard, yet, if it makes things easier then use both.
+9. You should usually use same coding standard, yet, if it makes things easier then use both.
 ```php
 $name = 'john';
 
@@ -184,6 +185,7 @@ $pi =3.141;
 $fileIsUploaded = true;
 $fileIsUploaded = false;
 ```
+
 6. We will use if statement to see if it true or false.
 7. () is the condition
 8. We will check if this ()  condition evalue to true.
@@ -191,7 +193,7 @@ $fileIsUploaded = false;
 10. If we use false since it does not evaluate to true we don't see anthing
 ```php
 if (false) { //
-    echo 'Your file was uploaded';
+    echo 'Your file was not uploaded';
 }
 ```
 9. But if we use true
@@ -505,7 +507,7 @@ $users = [
 var_dump($users);
 
 ```
-28. As you see we have array with 2 elements, the first array has index 0 with 2 items inside, username & email, second array has index10 with 2 items inside, username & email as well.
+28. As you see we have array with 2 elements, the first array has index 0 with 2 items inside, username & email, second array has index 1 with 2 items inside, username & email as well.
 ```json
 array (size=2)
   0 => 
@@ -551,7 +553,7 @@ echo '<br>';
 var_dump($users);
 
 ```
-34. Here we have an Array sincie another and inside another array.
+34. Here we have an Array since another and inside another array.
 ```js
 
 array (size=2)
@@ -618,7 +620,7 @@ foreach($users as $user) {
 
 44. Now we going to modify a more complex array like this.
 
-45. Before we sae how we can add to the array by `$users[] = 'josh';
+45. Before we saw how we can add to the array by `$users[] = 'josh';
 
 46. Now to add a new array to the array which is more complicated
 ```php
@@ -709,3 +711,97 @@ array (size=4)
   'about' => string 'I am learning to code' (length=21)
 
 ```
+
+### NULL
+> Null represents a variable with no value. Know happens when a variable is assigned the value null or has simply not been set a value.
+
+1. $name = null;
+
+
+```php
+var_dump($name); //null
+```
+
+2. We use null usually when we want to set a variable for name, but we not sure what the value would be yet.
+3. We will eventually update the value.
+```php
+$name = null;
+
+$name = 'John';
+
+var_dump($name); // John
+```
+4. Reason why we use null value is because we can NOT do.
+```php
+$name
+
+$name = ;
+
+```
+5. It would give an error.
+6. If you var_dump something that doesn't exist you get null and error.
+   ```php
+   var_dump($age); // null
+   ```
+7. Using unset will set variable to null and give error
+```php
+$name = 'John';
+
+unset($name);
+
+var_dump($name);
+```
+8.  if you see Null anywhere, it must be set prior to be overwrittern.
+9.  But if you see Null and error message 
+10. >Notice: Undefined variable: name
+11. Then it means the variable has not been set and doesn't exist
+12. Instead of using unset() set variable to null.
+```php
+$name = null;
+```
+13. Which mean variable does exist and you will not see error message and see just Null output instead.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -14,6 +14,7 @@
         <li><a href="/5-booleans">Booleans</a></li>
         <li><a href="/6-arrays">Arrays</a></li>
         <li><a href="/7-diving-into-arrays">Diving into arrays</a></li>
+        <li><a href="/8-null">NULL</a></li>
     </ul>
 </body>
 </html>
