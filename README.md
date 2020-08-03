@@ -18,6 +18,10 @@
       - [Nesting If statements](#nesting-if-statements)
       - [Inversion Operator](#inversion-operator)
       - [check which values will run true or not](#check-which-values-will-run-true-or-not)
+    - [Logical Operators](#logical-operators)
+      - [&& and Operator](#-and-operator)
+      - [OR Operator](#or-operator)
+      - [NOT operator !](#not-operator-)
 
 ### Variables
 1. String
@@ -1114,9 +1118,108 @@ if (-5) {
 6. You can do that using var_dump()
 
 
+### Logical Operators
 
+#### && and Operator
 
+1. we going to use the && operator
 
+```php
+if (true && true) {
+  echo 'Hello';
+}
+// Hello
+```
+
+2. What if one is true and other false
+```php
+if (true && false) {
+  echo 'Hello';
+}
+// 
+if (true && false && true {
+  echo 'Hello';
+}
+//
+
+if (true && true & true) {
+  echo 'Hello';
+}
+// Hello
+
+if (true && true & false) {
+  echo 'Hello';
+}
+//
+```
+
+3. Now we will use a more detailed example of logical operator
+```php
+// $username = 'billy'; //
+$username = 'alex';  // You are in!
+$password = 'ilovecats';
+
+if ($username == 'alex' && $password == 'ilovecats') {
+  echo 'You are in!';
+}
+// 
+
+```
+#### OR Operator
+
+1. We going to check if day of the week provided is either 6 or 7.
+```php
+$dayOfWeek = 7; // The weekend is here!
+// $dayOfWeek = 5; //
+
+if ($dayOfWeek == 6 || $dayOfWeek == 7) {
+  echo 'The weekend is here!';
+}
+
+```
+
+#### NOT operator !
+1. You can combine multiple operators
+```php
+$dayOfWeek = 6; // You have a day off!
+$dayOfWeek = 7; //
+$workingTheWeekend = true;
+
+if ($dayOfWeek == 6 || $dayOfWeek == 7 && !$workingTheWeekend) {
+  echo 'You have a day off!';
+}
+
+```
+
+2. Our code above is not working correctly. It should not display on $dayOfWeek = 6;  // You have day off.
+3. Reason for this not working is operator Presidence.
+4. Since is only checking `$dayOfWeek == 7 && !$workingTheWeekend` this part here.
+5. then `$dayOfWeek == 6` this part here been evaluated Only that why resulting true and not checking for `!$workingTheWeekend`
+6. To fix this we need to first set the first condition we want to evaluate sorounded by ()
+```php
+
+$dayOfWeek = 6; //
+// $dayOfWeek = 7; //
+$workingTheWeekend = true;
+
+if (($dayOfWeek == 6 || $dayOfWeek == 7) && !$workingTheWeekend) {
+  echo 'You have a day off!';
+}
+```
+7. Now we use right condition and works properly
+```php
+
+$dayOfWeek = 7; // You have a day off!
+
+$workingTheWeekend = false;
+
+if (($dayOfWeek == 6 || $dayOfWeek == 7) && !$workingTheWeekend) {
+  echo 'You have a day off!';
+}
+```
+
+7. All operators you really need are  &&(And), || (or), ! (not)
+8. Be wat way of your parentesis and what is checked first to avoid Operator Presidence issue we had in Step 3.
 
 
 

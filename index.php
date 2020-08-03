@@ -17,6 +17,7 @@
         <li><a href="/8-null">NULL</a></li>
         <li><a href="/9-concatination">Concatination</a></li>
         <li><a href="/10-if-statement-basics">If Statement Basics</a></li>
+        <li><a href="/11-logical-operators">Logical Operators</a></li>
     </ul>
 </body>
 </html>
