@@ -18,6 +18,7 @@
         <li><a href="/9-concatination">Concatination</a></li>
         <li><a href="/10-if-statement-basics">If Statement Basics</a></li>
         <li><a href="/11-logical-operators">Logical Operators</a></li>
+        <li><a href="/12-comparison-operators">Comparison Operators</a></li>
     </ul>
 </body>
 </html>

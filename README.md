@@ -22,6 +22,13 @@
       - [&& and Operator](#-and-operator)
       - [OR Operator](#or-operator)
       - [NOT operator !](#not-operator-)
+    - [Comparison Operators](#comparison-operators)
+      - [Equal operators == (does not check type) and === (checks type)](#equal-operators--does-not-check-type-and--checks-type)
+      - [Not Equal operator](#not-equal-operator)
+      - [using Not equal on !variable](#using-not-equal-on-variable)
+      - [using <> symbol as not equal](#using--symbol-as-not-equal)
+      - [Using < and > to compare.](#using--and--to-compare)
+      - [Combine with logical operator](#combine-with-logical-operator)
 
 ### Variables
 1. String
@@ -1222,34 +1229,291 @@ if (($dayOfWeek == 6 || $dayOfWeek == 7) && !$workingTheWeekend) {
 8. Be wat way of your parentesis and what is checked first to avoid Operator Presidence issue we had in Step 3.
 
 
+### Comparison Operators
+#### Equal operators == (does not check type) and === (checks type)
+
+1. Both conditions are the same.
+```php
+$uploaded = true;
+
+if ($uploaded) {
+
+}
+
+if ($uploaded == true) {
+  //  this one is easier to see what we comparing
+}
+
+```
+2. Nothing wrong with this but it can be confusing.
+```php
+$uploaded = 1;
+
+if ($uploaded == true) {
+    echo 'Uploaded';
+}
+// Uploaded
+```
+
+3. That is why we going to introduce the === comparison operator
+```php
+$uploaded = 1;
+
+if ($uploaded == true) {
+    echo 'Uploaded';
+}
+//
+```
+4. Above failed because failed type. This one has correct type.
+```php
+
+$uploaded = 1;
+
+if ($uploaded == true) {
+    echo 'Uploaded';
+}
+// Uploaded
+```
+5. Is better to use === equal if you want to ensure result is the value and type you setting. Then strict type comparison very helpful.
+6. Otherwise you may run into issue you don't want to.
+7. Here is example how === is better to get the correct result and avoid passing when there may be an error, and getting negative value.
+
+```php
+
+$uploaded = -5;
+
+if ($uploaded == true) {
+    echo 'Uploaded';
+}
+// Uploaded
+$uploaded = -5;
+
+if ($uploaded === true) {
+    echo 'Uploaded';
+}
+// 
+```
+8. As you can see === is more safe.
+
+9. Here is another example.
+```php
+
+$tablesAvailable = true;
+
+if ($tablesAvailable) {
+    echo 'Book a table';
+}
+// Book a table
 
 
+$tablesAvailable = '1false';
+
+if ($tablesAvailable) {
+    echo 'Book a table';
+}
+
+// Book a table
+```
+10. Now you see the issue. What is happening here is PHP is type casting tablesAvailable so that it can be compared.
+
+11. Lets see how PHP type casting works
+```php
+echo '1john'; // 1john
+echo (int) '1john'; // 1
+```
+12. As you can see is eliminating the text leaving only 1.
+13. If were to var_dump() we will see the type as int
+
+```php
+var_dump((int) '1john'); // int 1
+```
+14. We can test it for bool values as well
+```php
+var_dump((bool) 'false'); // boolean true
+
+```
+15. This can be very messy since php will automatically type cast this for you.
+16. As you can see above first one pass when using == which should not.
+17. It does not pass when you use === which is the correct way.
+18. So you should use === in most cases and check for types to avoid these issues.
+```php
+$tablesAvailable = 'false';
+
+if ($tablesAvailable == true) {
+    echo 'Book a table';
+}
+//Book a table
+
+echo '<br>';
 
 
+if ($tablesAvailable === true) {
+    echo 'Book a table';
+}
+// 
+
+```
+#### Not Equal operator
+1. Now we will use the not equal operator !=  and not equal with type check !==
+
+```php
+// fails since php is converting 'true' string as boolean true.
+$tablesAvailable = 'true';
+
+if ($tablesAvailable != true) {
+    echo 'No table available'
+//
+
+// is passing since the type check doesn't pass.
+$tablesAvailable = 'true';
+
+if ($tablesAvailable !== true) {
+    echo 'No table available'
+
+// echo 'Book a table
+```
+#### using Not equal on !variable
+
+1. Another way to do not equal using ! before !variable.
+
+```php
+$tablesAvailable = 'false';
+
+if (!$tablesAvailable) {
+    echo 'No table available'
+
+// 
+
+$tablesAvailable = false;
+
+if (!$tablesAvailable) {
+    echo 'No table available'
+
+// Book a table
+
+$tablesAvailable = true;
+
+if (!$tablesAvailable) {
+    echo 'No table available'
+// 
 
 
+$tablesAvailable = '1';
+
+if (!$tablesAvailable) {
+    echo 'No table available'
+
+//
+```
+2. Problem with this method is that it does not check type.
+3. So An alternative better way that reads better is and checks type is
+```php
+
+$tablesAvailable = false;
+
+if ($tablesAvailable !== true) {
+    echo 'No table available'
+```
+
+#### using <> symbol as not equal
+1. <> symbol
+```php
+
+// $tablesAvailable = 'true'; //
+// $tablesAvailable = true; //
+$tablesAvailable = false; // No table available
+// $tablesAvailable = 'false'; //
 
 
+if ($tablesAvailable <> true) {
+    echo 'No table available';
+}
+```
+
+2. <> is an alternative but is a lot more clear to use !== as well !== has type check and <> does not have type check.
+
+#### Using < and > to compare.
+1. here we will use bigger than or less than symbols
+```php
+$roomsRequested = 4; // Sorry, not enough rooms
+$roomsRequested = 3; //
+$roomsAvailable = 3;
+
+if ($roomsRequested > $roomsAvailable) {
+  echo 'Sorry, not enough rooms.';
+}
+// Sorry, not enough rooms
+
+```
+2. It works the same if we move variables and change symbol.
+   
+```php
+$roomsRequested = 4; // Sorry, not enough rooms
+$roomsAvailable = 3;
+
+if ($roomsAvailable < $roomsRequested) {
+  echo 'Sorry, not enough rooms.';
+}
+// Sorry, not enough rooms.
+```
+3. Check so that you always keep a room free in your hotel.
+4. So you want to check if room you requested is greater than or equal to and show error.
+5. We will use >= to accomplish this.
+```php
+$roomsRequested = 3; //  Not enough rooms.
+$roomsRequested = 2;
+$roomsAvailable = 3;
+
+if ($roomsRequested >= $roomsAvailable) {
+  echo 'Not enough rooms.';
+}
+
+// Not enough rooms.
+// 
+
+```
+6. Now we will use <=
+```php
+
+$roomsRequested = 2; //
+$roomsRequested = 3; // Sorry, not enough rooms.
+$roomsAvailable = 3;
+
+if ($roomsAvailable <= $roomsRequested) {
+    echo 'Sorry, not enough rooms.';
+}
+
+```
+
+#### Combine with logical operator
+1. We going to check if too many rooms been requested, we also going to set a limit to maximum rooms we can book.
+```php
+$roomsRequested = 7;
+$roomsAvailable = 20; // Your booking is complete.
+// $roomsAvailable = 2; // Please choose less rooms.
 
 
+if ($roomsRequested >= $roomsAvailable) {
+    echo 'Please choose less rooms.';
+} else {
+    echo 'Your booking is complete.';
+}
+```
+2. Now we will add limit to same function
+```php
+$maxRoomsAllowed = 5;
+// $roomsRequested = 4; // Your booking is complete.
+$roomsRequested = 7; // Please choose less rooms.
+$roomsAvailable = 20;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+if (($roomsRequested >= $roomsAvailable) || ($roomsRequested >= $maxRoomsAllowed)) {
+    echo 'Please choose less rooms.';
+} else {
+    echo 'Your booking is complete.';
+}
+```
+3. Works correctly but would be better to separate if staments to drill down real reason why is failing.
 
 
 
