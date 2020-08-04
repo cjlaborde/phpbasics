@@ -29,6 +29,8 @@
       - [using <> symbol as not equal](#using--symbol-as-not-equal)
       - [Using < and > to compare.](#using--and--to-compare)
       - [Combine with logical operator](#combine-with-logical-operator)
+    - [Switch](#switch)
+      - [Using comparison operator in switch cases.](#using-comparison-operator-in-switch-cases)
 
 ### Variables
 1. String
@@ -1515,9 +1517,68 @@ if (($roomsRequested >= $roomsAvailable) || ($roomsRequested >= $maxRoomsAllowed
 ```
 3. Works correctly but would be better to separate if staments to drill down real reason why is failing.
 
+### Switch
+> Swtich statement can be more flexible and cleaner solution alternative to if statement.
+1. Switch statement similar to if statement
+2. You first put a value inside (1)
+3. Then you write a series of scased inside the brackets.
+4. In which we will execute something if there is a match of the cases
+5. When there is a match it will execute case and then break code.
+```php
+switch (1) {
+    case 1:
+        echo 'The value is one.';
+    break;
+}
+// The value is one.
 
+```
+6. Default is kind of an else inside an if statement.
+```php
+switch (2) {
+    case 1:
+        echo 'The value is one.';
+        break;
+    default:
+        echo 'The value is unknown.';
+        break;
+}
+// 
+```
+7. We also add another case statement
+```php
+switch (2) {
+    case 1:
+        echo 'The value is one.';
+        break;
+    case 2:
+        echo 'The value is two.';
+        break;
+    default:
+        echo 'The value is unknown.';
+        break;
+}
+```
+#### Using comparison operator in switch cases.
+1. What we doing here is passing a true value. Where all these conditions will be attempted and evaluated.
+2. Then if weather is sunny we will set color that was declared as null into blue.
+3. If weather is cloudy we want to set the color to gray.
+4. Then we echo out the color and we should see the color depending on what we choose for the weather.
+```php
+   $weather = 'sunny';
+   $color = null;
 
+   switch (true) {
+       case $weather == 'sunny';
+           $color = 'blue';
+       break;
+       case $weather == 'cloudy';
+           $color = 'gray';
+       break;
+   }
 
+   echo $color;
+```
 
 
 

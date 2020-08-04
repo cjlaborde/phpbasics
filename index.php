@@ -19,6 +19,7 @@
         <li><a href="/10-if-statement-basics">If Statement Basics</a></li>
         <li><a href="/11-logical-operators">Logical Operators</a></li>
         <li><a href="/12-comparison-operators">Comparison Operators</a></li>
+        <li><a href="/13-switch">Switch</a></li>
     </ul>
 </body>
 </html>
