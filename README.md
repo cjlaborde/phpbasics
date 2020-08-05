@@ -31,6 +31,13 @@
       - [Combine with logical operator](#combine-with-logical-operator)
     - [Switch](#switch)
       - [Using comparison operator in switch cases.](#using-comparison-operator-in-switch-cases)
+    - [Basi Arithmetic](#basi-arithmetic)
+      - [using ++](#using-)
+      - [Now we will use more complicated function using %.](#now-we-will-use-more-complicated-function-using-)
+      - [Now we will use substraction](#now-we-will-use-substraction)
+      - [Now we will use short version +=](#now-we-will-use-short-version-)
+      - [Modular](#modular)
+      - [Exponential operator](#exponential-operator)
 
 ### Variables
 1. String
@@ -1558,6 +1565,7 @@ switch (2) {
         echo 'The value is unknown.';
         break;
 }
+// The value is two.
 ```
 #### Using comparison operator in switch cases.
 1. What we doing here is passing a true value. Where all these conditions will be attempted and evaluated.
@@ -1577,8 +1585,238 @@ switch (2) {
        break;
    }
 
-   echo $color;
+   echo $color; // blue
 ```
+### Basi Arithmetic
+1. We can assign same value and add + 1
+```php
+$views = 0;
+
+$views = $views + 1;
+
+echo $views;
+// 1
+```
+2. We can also change it to float even through was integer at first.
+```php
+$views = 0;
+
+$views = $views + 5.5;
+
+echo $views;
+// 5.5
+```
+3. What happens if we add a string?
+4. This is the concept of type casting. Where php convert string into number. Because it sees we trying to add + to it.
+```php
+$views = 0;
+
+$views = $views + '1';
+
+echo $views;
+// 1
+
+```
+5. you can also add declare variable twice to increase its value twice.
+```php
+$views = 0;
+
+$views = $views + 1;
+
+$views = $views + 1;
+
+echo $views; // 2
+```
+
+#### using ++
+1. if you assign variable and use it, it will not work.
+
+```php
+$views = 0;
+
+$views = $views++;
+
+echo $views; // 0
+```
+
+2. Here is proper way to use ++
+```php
+$views = 0;
+
+$views++;
+
+echo $views; // 1
+```
+3. You can also use  ++ multiple times to add up the value.
+```php
+$views = 0;
+
+$views++;
+
+$views++;
+
+$views++;
+
+echo $views; // 3
+
+```
+#### Now we will use more complicated function using %.
+1. We will use formula for % 7 / 30  * 100
+2. We will use parentesis based on the order of the calculation.
+```php
+$totalLessons = 30;
+$completedLessons = 7;
+
+$percentageComplete = ($completedLessons / $totalLessons) * 100;
+
+echo "You've completed {$percentageComplete}% of this course!";
+// You've completed 23.333333333333% of this course!
+
+```
+3. We use parentesis to command which calculation should be executed first.
+4. Now we going to fix issue with 23.333333333333%  we only want first 2 digits before the .
+5. We could round this down or use a php function number_format
+6. We could re assign value.
+```php
+$totalLessons = 30;
+$completedLessons = 7;
+
+$percentageComplete = ($completedLessons / $totalLessons) * 100;
+
+$percentageComplete = number_format($percentageComplete);
+echo "You've completed {$percentageComplete}% of this course!";
+// You've completed 23% of this course!
+```
+7. You can also be more specific and assign second value to assign number extra decimal places.
+```php
+$totalLessons = 30;
+$completedLessons = 7;
+
+$percentageComplete = ($completedLessons / $totalLessons) * 100;
+
+$percentageComplete = number_format($percentageComplete, 2); // You've completed 23.33% of this course!
+$percentageComplete = number_format($percentageComplete, 1); // You've completed 23.3% of this course!
+$percentageComplete = number_format($percentageComplete, 3); // You've completed 23.333% of this course!
+// same result
+$percentageComplete = number_format($percentageComplete, 0); // You've completed 23% of this course!
+echo "You've completed {$percentageComplete}% of this course!";
+```
+8. Now lets inline the code since there is no need to re-assign the variable.
+```php
+$totalLessons = 30;
+$completedLessons = 7;
+
+$percentageComplete =  number_format(($completedLessons / $totalLessons) * 100);
+
+echo "You've completed {$percentageComplete}% of this course!"; // You've completed 23% of this course!
+```
+
+#### Now we will use substraction
+1. Here we substract balance
+```php
+$balance = 500;
+$cost = 25;
+
+echo $balance = $balance - $cost;
+
+// 475
+```
+
+2. Now we will use  --
+```php
+$views = 0;
+
+$views--;
+
+echo $views;
+
+// -1
+```
+
+#### Now we will use short version +=
+1. instead of addind $points = $points + 1 which is quicker and cleaner
+```php
+$points = 0;
+$points += 10;
+
+echo $points; // 10
+
+```
+2. You can also substract as well
+```php
+$points = 0;
+$points += 10;
+$points -= 2;
+
+echo $points; // 8
+```
+
+#### Modular
+1. will return the remainder of a number, when is divided by another.
+```php
+$a = 10;
+$b = 8;
+
+echo $a % $b;
+
+```
+2. This mostly used when you are interested in the remainder of a number.
+3. Also has other uses in this case we will use a for
+4. First thing we do is create new variable row
+5. Then $row that we are looping is less than equal to rows <=
+6. Lastly we add $rows ++
+```php
+$rows = 10;
+
+for ($row = 1; $row <= $rows; $row++) {
+  echo '1<br>';
+}
+/*
+   1
+   1
+   1
+   1
+   1
+   1
+   1
+   1
+   1
+   1
+*/
+```
+2. Now we will check if number even or not and give it an error.
+3. We will use for and modular
+```php
+$rows = 10;
+
+for ($row = 1; $row <= $rows; $row++) {
+    if ($row % 2 === 0) {
+        echo 'Even';
+    } else {
+        echo 'Odd';
+    }
+}
+// OddEvenOddEvenOddEvenOddEvenOddEven
+```
+#### Exponential operator
+1. If we want to raise power by 2 we just use ** symbols
+2. Which would 10 X 10 = 100
+```php
+$a = 10;
+
+echo $a ** 2; // 100
+echo $a ** 9 // 1000000000
+```
+
+
+
+
+
+
+
+
+
+
 
 
 

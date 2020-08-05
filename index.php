@@ -9,8 +9,9 @@
 <body>
     <ul>
         <li><a href="/1-variables">Variables</a></li>
+        <li><a href="/2-data-types">Data Types</a></li>
         <li><a href="/3-strings">Strings</a></li>
-        <li><a href="/4-numbers">Numbers</a></li>
+        <li><a href="/4-numbers-and-floats">The numbers Integers and floats</a></li>
         <li><a href="/5-booleans">Booleans</a></li>
         <li><a href="/6-arrays">Arrays</a></li>
         <li><a href="/7-diving-into-arrays">Diving into arrays</a></li>
@@ -20,6 +21,7 @@
         <li><a href="/11-logical-operators">Logical Operators</a></li>
         <li><a href="/12-comparison-operators">Comparison Operators</a></li>
         <li><a href="/13-switch">Switch</a></li>
+        <li><a href="/14-basic-arithmetic">Basic arithmetic</a></li>
     </ul>
 </body>
 </html>
