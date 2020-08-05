@@ -22,6 +22,7 @@
         <li><a href="/12-comparison-operators">Comparison Operators</a></li>
         <li><a href="/13-switch">Switch</a></li>
         <li><a href="/14-basic-arithmetic">Basic arithmetic</a></li>
+        <li><a href="/15-for-loop">For Loop</a></li>
     </ul>
 </body>
 </html>

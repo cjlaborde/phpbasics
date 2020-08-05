@@ -38,6 +38,9 @@
       - [Now we will use short version +=](#now-we-will-use-short-version-)
       - [Modular](#modular)
       - [Exponential operator](#exponential-operator)
+    - [For Loop](#for-loop)
+      - [Pagination example](#pagination-example)
+      - [We can also use a for loop to go through an array.](#we-can-also-use-a-for-loop-to-go-through-an-array)
 
 ### Variables
 1. String
@@ -1808,13 +1811,148 @@ echo $a ** 2; // 100
 echo $a ** 9 // 1000000000
 ```
 
+### For Loop
+1. This will in fact run.
+2. What we have not apply here is an initiator, condition, and an increment
+3. since there is no condition it will cause infinite loop and cause server to crash.
+```php
+for (;;) {
+    //
+}
+// Fatal error: Maximum execution time of 30 seconds exceeded in
+```
+3. As soon as for loop star we want our initiator to run x = 1; We will use initiator to know how many times we want to loop based on condition has been meet.
+4. While The condition carry true it will continue looping $x <= 10;
+5. The we have the last part which is our increment $x++
+6. you can also use $x = $x + 1 alternative to shorter version $x++
+7. Now we will see what happens when we echo out $x;
 
+```php
+for ($x = 1; $x <= 10; $x++) {
+    echo $x , '<br>';
+}
+/*
+    1
+    2
+    3
+    4
+    5
+    6
+    7
+    8
+    9
+    10
+*/
 
+```
+#### Pagination example
+1. Lets say we have 210 articles, then define how many items I want to see 25 per page. Then we need to find out how many pages there are based on these numbers.
+2. Is better practice to create new variable $pageCount rather than putting it directly on the loop.
+```php
 
+$totalItems = 210;
+$itemsPerPage = 25;
 
+$pageCount = $totalItems / $itemsPerPage;
 
+echo $pageCount; // 8.4
 
+```
+3. Since result is 8.4 it means we have to round them up and that there are 9 pages.
+4. To do this we use php function called ciel() which is short for cieling.
+```php
 
+$totalItems = 210;
+$itemsPerPage = 25;
+
+$pageCount = ceil($totalItems / $itemsPerPage);
+
+echo $pageCount; // 9
+
+```
+5. The opposite is floor
+```php
+
+$totalItems = 210;
+$itemsPerPage = 25;
+
+$pageCount = floor($totalItems / $itemsPerPage);
+
+echo $pageCount; // 8
+
+```
+6. Now we we want to do is use for loop to create links user can click
+7. typically you will find an i inside a for loop this stance for i = increment
+```php
+
+$totalItems = 210;
+$itemsPerPage = 25;
+
+$pageCount = ceil($totalItems / $itemsPerPage);
+
+for ($i = 1; $i <= $pageCount; $i++) {
+    echo '<a href="?page=' . $i . '">' . $i . '</a> ';
+
+}
+
+// 1 2 3 4 5 6 7 8 9
+
+```
+8. This is how pagination works and more items will automatically increase it.
+```php
+
+$totalItems = 811; // // 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33
+$itemsPerPage = 25;
+
+$pageCount = ceil($totalItems / $itemsPerPage);
+
+for ($i = 1; $i <= $pageCount; $i++) {
+    echo '<a href="?page=' . $i . '">' . $i . '</a>';
+}
+```
+
+9. We can also check if there are no more than 1 page to not display page number
+```php
+$totalItems = 25;
+$itemsPerPage = 25;
+$pageCount = ceil($totalItems / $itemsPerPage);
+// only display when pageCount greater than 1
+if ($pageCount > 1) {
+    for ($i = 1; $i <= $pageCount; $i++) {
+        echo '<a href="?page=' . $i . '">' . $i . '</a> ';
+    }
+}
+```
+#### We can also use a for loop to go through an array.
+1. I want to loop through all items in the array and echo out the names.
+```php
+$names = ['john', 'joe', 'jane'];
+
+for ($i = 0; $i < count($names); $i++) {
+    echo $names[$i] . '<br>';
+}
+/*
+john
+joe
+jane
+*/
+
+```
+2. Now we know that it will automatically work if we add new name.
+```php
+$names = ['john', 'joe', 'jane', 'karen'];
+
+for ($i = 0; $i < count($names); $i++) {
+    echo $names[$i] . '<br>';
+}
+/*
+   john
+   joe
+   jane
+   karen
+*/
+
+```
 
 
 
