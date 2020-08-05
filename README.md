@@ -41,6 +41,10 @@
     - [For Loop](#for-loop)
       - [Pagination example](#pagination-example)
       - [We can also use a for loop to go through an array.](#we-can-also-use-a-for-loop-to-go-through-an-array)
+    - [The While and Do While loop](#the-while-and-do-while-loop)
+      - [Now we will count to 10 using this while loop](#now-we-will-count-to-10-using-this-while-loop)
+      - [Now we create example where we check how many times we have roll dice to reach specific number.](#now-we-create-example-where-we-check-how-many-times-we-have-roll-dice-to-reach-specific-number)
+      - [Do While Loop](#do-while-loop)
 
 ### Variables
 1. String
@@ -1954,20 +1958,121 @@ for ($i = 0; $i < count($names); $i++) {
 
 ```
 
+### The While and Do While loop
+1. Inside the parentesis is the expression that allow the loop to run. Till it evaluate to false.
+```php
+while () {
+  
+}
 
+```
+2. What would happen if you write false?
+```php
+while (false) {
+  echo 'Will this run?';
+}
+//
+```
+3. Now what would happen if you set condition to true.
+```php
+while (false) {
+  echo 'Will this run?';
+}
+// Will this run?Will this run?Will this run?Will this run?Will this run?Will this run?Will this run?Will this run?Will this run?Will this run?Will this run?Will this run?
+```
+4. It will go into infinite loop.
+#### Now we will count to 10 using this while loop
+```php
+$currentNumber = 1;
+$endAt = 10;
+$incrementBy = 1;
 
+while ($currentNumber <= $endAt) {
+  $currentNumber += $incrementBy;
+  echo $currentNumber . '<br>';
+}
+/*
+   2
+   3
+   4
+   5
+   6
+   7
+   8
+   9
+   10
+   11
+*/
 
+```
+5. This is happening based on order of incrementing
+```php
+$currentNumber = 1;
+$endAt = 10;
+$incrementBy = 1;
 
+while ($currentNumber <= $endAt) {
+    echo $currentNumber . '<br>';
+    $currentNumber += $incrementBy;
+}
+/*
+   1
+   2
+   3
+   4
+   5
+   6
+   7
+   8
+   9
+   10
+*/
+```
+6. While is more complicated than for loop, reason while is it used, is that it gives us more control on how we initialize and check.
+7. Because we got block like this it allows us to create if statements within or switch statement and any other condition to control the loop.
+8. for loop is all within the for () in which we have limited control.
+9. while is a replacement for for loop but with more control within the block of code.
 
+#### Now we create example where we check how many times we have roll dice to reach specific number.
 
+1. we will use rand to generate random number.
+```php
+$numberIWant = 3;
 
+while (($diceRoll = rand(1, 6)) !== $numberIWant) {
+    echo "You rolled a {$diceRoll} we need a {$numberIWant}<br>";
+}
 
+echo "You rolled a {$numberIWant}!";
 
+/*
+   You rolled a 1 we need a 3
+   You rolled a 6 we need a 3
+   You rolled a 4 we need a 3
+   You rolled a 4 we need a 3
+   You rolled a 5 we need a 3
+   You rolled a 4 we need a 3
+   You rolled a 3!
+*/
+```
+2. This is an example where you going to find while loop useful.
+3. You will not use it many times, but there are times when you will know when to use it and applies to what you want to do.
+4. You have to be careful when you use while loops since they have chance to create infinite loops
+5. Since if statement never evaluate to false it will loop continously
+6. Check condition inside a loop will sometime evaluate.
 
-
-
-
-
+#### Do While Loop
+1. Is a variation of a while loop
+2. You use it when you want the block to run at least once before stopping.
+3. This loop always ends in semicolon ;
+```php
+do {
+  echo 'this will be run at least once';
+} while();
+// this will be run at least once
+```
+4. Is it rarely that you will use while or do while.
+5. Yet is good to remember about then for the times comes when you can have use for them.
 
 
 

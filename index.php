@@ -23,6 +23,7 @@
         <li><a href="/13-switch">Switch</a></li>
         <li><a href="/14-basic-arithmetic">Basic arithmetic</a></li>
         <li><a href="/15-for-loop">For Loop</a></li>
+        <li><a href="/16-the-while-and-do-while-loop">The While and Do While Loops</a></li>
     </ul>
 </body>
 </html>
