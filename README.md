@@ -45,6 +45,8 @@
       - [Now we will count to 10 using this while loop](#now-we-will-count-to-10-using-this-while-loop)
       - [Now we create example where we check how many times we have roll dice to reach specific number.](#now-we-create-example-where-we-check-how-many-times-we-have-roll-dice-to-reach-specific-number)
       - [Do While Loop](#do-while-loop)
+    - [The Foreach Loop](#the-foreach-loop)
+      - [Foreach Loop using multidimensional array](#foreach-loop-using-multidimensional-array)
 
 ### Variables
 1. String
@@ -2075,9 +2077,96 @@ do {
 5. Yet is good to remember about then for the times comes when you can have use for them.
 
 
+### The Foreach Loop
+1. For each is very simple and you will use it most often than other loops
+```php
+$names = ['John', 'Joe', 'Jane'];
 
 
+foreach ($names as $name) {
+    echo $name . '<br>';
+}
+```
+2. Works the same except now we can access the index of each key
+```php
+$names = ['John', 'Joe', 'Jane'];
 
+
+foreach ($names as $index => $name) {
+    echo $index, ': ', $name, '<br>';
+}
+
+/*
+    0: John
+    1: Joe
+    2: Jane
+*/
+```
+
+#### Foreach Loop using multidimensional array
+1. looping multidimensional array
+```php
+$topics = [
+    [
+        'id'    => 1,
+        'title' => 'The best way to learn PHP?',
+        'posts' => [
+            ['body' => 'Practice a lot!'],
+            ['body' => 'Work on a project'],
+        ]
+    ],
+    [
+        'id'    => 2,
+        'title' => 'How do I use a foreach loop?',
+        'posts' => [
+            ['body' => 'Just watch this part.'],
+        ]
+    ]
+];
+
+foreach ($topics as $topic) {
+    echo '<h1>' . $topic['title'] . '</h1>';
+}
+
+// The best way to learn PHP?
+// How do I use a foreach loop?
+```
+2. Now we will need another foreach to loop through each of the posts
+```php
+$topics = [
+    [
+        'id'    => 1,
+        'title' => 'The best way to learn PHP?',
+        'posts' => [
+            ['body' => 'Practice a lot!'],
+            ['body' => 'Work on a project'],
+        ]
+    ],
+    [
+        'id'    => 2,
+        'title' => 'How do I use a foreach loop?',
+        'posts' => [
+            ['body' => 'Just watch this part.'],
+        ]
+    ]
+];
+
+foreach ($topics as $topic) {
+    echo '<h1>' . $topic['title'] . '</h1>';
+    foreach ($topic['posts'] as $post) {
+        echo '<p>' . $post['body'] . '</p>';
+    }
+}
+/*
+   The best way to learn PHP?
+   Practice a lot!
+
+   Work on a project
+
+   How do I use a foreach loop?
+   Just watch this part.
+*/
+```
 
 
 

@@ -24,6 +24,7 @@
         <li><a href="/14-basic-arithmetic">Basic arithmetic</a></li>
         <li><a href="/15-for-loop">For Loop</a></li>
         <li><a href="/16-the-while-and-do-while-loop">The While and Do While Loops</a></li>
+        <li><a href="/17-the-for-each">The FOREACH loop</a></li>
     </ul>
 </body>
 </html>
