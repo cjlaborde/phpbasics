@@ -27,6 +27,7 @@
         <li><a href="/17-the-for-each">The FOREACH loop</a></li>
         <li><a href="/18-breaking-and-continuing">Breaking and continuing</a></li>
         <li><a href="/19-dumping">Dumping</a></li>
+        <li><a href="/20-function-basics">Function basics</a></li>
     </ul>
 </body>
 </html>

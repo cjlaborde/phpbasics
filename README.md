@@ -55,6 +55,9 @@
       - [xdebug](#xdebug)
       - [using <pre>](#using-pre)
       - [print_r](#print_r)
+    - [Functions basics](#functions-basics)
+      - [Pass optional arguments to a function](#pass-optional-arguments-to-a-function)
+      - [Assign a function to a variable](#assign-a-function-to-a-variable)
 
 ### Variables
 1. String
@@ -2445,15 +2448,157 @@ Array
 7. Just use var_dump and you will be able to imediately to see the state of a variable.
 
 
+### Functions basics
+1. Functions allow you to break out your code into reusable blocks of code.
+2. We will be looking at functions and how to use them and this will help you out when you start looking into object oriented programming.
+3. To use functions we use keyword function and then we write a name same way to we name variables.
+4. There no important rules how to name these but important thing is keep concistency.
+5. Lets define a fullName function that will return to us when we use it a full name
+6. Then after keyword we write 2 parentesis
+7. To call the function just write the function name with the parentesis. fullName(); // Joe Bond
+```php
+function fullName() {
+    echo 'Joe Bond';
+}
+
+fullName(); // Joe Bond
+```
+8. This work correctly, yet proper way to do it is return a value instead.
+9. Now returns nothing since have a return value now.
+```php
+function fullName() {
+    return 'Joe Bond';
+}
+
+fullName(); //
+
+```
+10. So in this case we can just echo it out.
+```php
+echo fullName(); // Joe Bond
+```
+
+11. You can also assign function to a variable.
+```php
+$fullName = fullName();
+echo $fullName;
+```
+12. The correct name for calling a function is invoking a function.
+13. This function mostly useless since you are returned hard coded values.
+14. Ideally you would want to insert values into the function that are used by the function.
+15. We want to construct full name base on first name and last name.
+16. Now we will use arguments/ parameters they are called same thing.
+17. They basically the variables you pass to the function.
+18. These variables that we put inside the parentesis we can pass them when we invoke the function or we can hard code the values
+19. This function will accept a firstName and lastName
+20. If you try to call it without arguments it will cause missing argument error.
+```php
+
+$firstName = 'Joe';
+$lastName = 'Bond';
 
 
+function fullName ($firstName, $lastName) {
+    return $firstName . ' ' . $lastName;
+}
+$fullName = fullName('Joe', 'Bond');
+echo $fullName; // Joe Bond
 
+echo fullName(); // Uncaught ArgumentCountError: Too few arguments to function fullName(), 0 passed in
+```
+21. The value we pass doesn't matter since we using a lousy typed language. 
+22. We have flexibility to pass any data type.
+23. You can do it in a variety of ways depends on what you want to do.
+```php
+function fullName ($firstName, $lastName) {
+    return "{$firstName} {$lastName}";
+}
+$fullName = fullName('Joe', 'Bond');
+echo $fullName; // Joe Bond
+```
+24. When you building these types of functions you can pass any amount of arguments into them.
+25. Even through ou may want to limit amount of arguments
+26. if you need to pass like 10 different arguments then you may need to create different functions instead.
+27. We can call different functions and place the return value as an argument for another function.
+28. Here we will use an example where we return the value of a function into another function
+```php
+function firstName() {
+    return 'Joe';
+}
 
+function fullName ($firstName, $lastName) {
+    return "{$firstName} {$lastName}";
+}
+$fullName = fullName(firstName(), 'Bond');
+echo $fullName; // Joe Bond
+```
+28. We can also pass variables to functions as well.
+```php
+$firstName = 'Joe';
+$lastName = 'Bond';
 
+$fullName = fullName($firstName, $lastName);
+echo $fullName; // Joe Bond
+```
 
+#### Pass optional arguments to a function
+1. We want to build the function as flexible as possible.
+2. Here we will set a default value to separator = ' '
+3. It will work correctly without error even if we don't pass the 3rd argument $sepator
+```php
+function fullName ($firstName, $lastName, $separator = ' ') {
+    return "{$firstName}{$separator}{$lastName}";
+}
+$fullName = fullName('Joe', 'Bond');
+echo $fullName; // Joe Bond
+```
+4. Now I can pass argument if I want to change $separator.
+5. it will replace $separator ' ' with '_'
+```php
+$fullName = fullName('Joe', 'Bond', '_');
+echo $fullName; // Joe-Bond
+```
+6. Lets see another variations of you might use.
 
+#### Assign a function to a variable
+1. Here we assign a function to a variable
+2. Always declare first the arguments that are required and then set the optionals one after
+```php
+$fullName = function ($firstName, $lastName, $separator = ' ') {
+    return "{$firstName}{$separator}{$lastName}";
+};
+```
+3. You can't do as before or you will get error.
+4. Which means variable can't be found.
+```php
+fullName('Joe', 'Bond', '_');
+echo $fullName; // Parse error: syntax error, unexpected 'fullName' (T_STRING) 
+```
+4. To make it work when you define a function as a variable you need to call it as a variable.
+```php
+echo $fullName('Joe', 'Bond');
+```
+5. This is useful if you may want to overwrite the same function later.
+6. Most important to know is ordering of your code.
+7. Because you define the variable first you need to call it after.
+8. If you call function first before defining it you will get error.
+```php
+echo $fullName('Joe', 'Bond');
 
+$fullName = function ($firstName, $lastName, $separator = ' ') {
+    return "{$firstName}{$separator}{$lastName}";
+};
 
+// : Undefined variable: fullName 
+//  Uncaught Error: Function name must be a string 
+```
+9. We get error since we trying to access variable before is been defined.
+10. Now if you use past example and declare function without been inside a variable it would still work without the ordering causing it to fail.
+```php
 
+echo fullName('Joe', 'Bond'); // Joe Bond
 
-
+function fullName ($firstName, $lastName, $separator = ' ') {
+    return "{$firstName}{$separator}{$lastName}";
+}
+```
