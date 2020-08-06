@@ -47,6 +47,10 @@
       - [Do While Loop](#do-while-loop)
     - [The Foreach Loop](#the-foreach-loop)
       - [Foreach Loop using multidimensional array](#foreach-loop-using-multidimensional-array)
+    - [Breaking and continuing](#breaking-and-continuing)
+      - [Break](#break)
+      - [continuing](#continuing)
+      - [break out the outer loop from within the inner loop.](#break-out-the-outer-loop-from-within-the-inner-loop)
 
 ### Variables
 1. String
@@ -2167,6 +2171,177 @@ foreach ($topics as $topic) {
    Just watch this part.
 */
 ```
+
+### Breaking and continuing
+1. Sometimes you need to break out of a loop or continue or skip a loop
+#### Break
+1. Guess what would happen if we add a break?
+2. It stops the loop
+3. Since there is no condition for the break, it breaks on first looop.
+```php
+$names = ['John', 'Joe', 'Jane'];
+
+foreach ($names as $name) {
+    echo $name, '<br>';
+    break;
+}
+
+// John
+
+```
+4. You can add if statement to control the loop.
+5. We want to loop through the array and as soon as we find user we looking for we break out of the loop
+```php
+$users = [
+    ['username' => 'John'],
+    ['username' => 'Joe'],
+    ['username' => 'Jane'],
+    ['username' => 'Ashley'],
+    ['username' => 'Karen'],
+    ['username' => 'Anastasia'],
+];
+
+$toFind = 'Anastasia';
+// $toFind = 'James'; // null
+$result = null;
+
+foreach ($users as $user) {
+    if ($user['username'] === $toFind) {
+        $result = $user;
+    break;
+    }
+}
+
+var_dump($result);
+// array (size=1) 'username' => string 'Jane' (length=4)
+```
+6. When it can't find username it gives the default null value.
+7. Each of the key of each user is a string
+8. If you remove break it would still work but if you find John on first loop there is no need to keep looping over the other names.
+9. Especially when the array is too long.
+
+#### continuing
+1. Will skip the next iteration at the point we call continue
+2. Lets say we loop but we to list users but skip a particular user from the list.
+3. As you see Ashley was skipped with continue
+```php
+
+$users = [
+    ['username' => 'John'],
+    ['username' => 'Joe'],
+    ['username' => 'Jane'],
+    ['username' => 'Ashley'],
+    ['username' => 'Karen'],
+    ['username' => 'Anastasia'],
+];
+
+$toSkip = 'Ashley';
+
+foreach ($users as $user) {
+    if ($user['username'] === $toSkip) {
+        continue;
+    }
+
+    echo $user['username'] . '<br>';
+}
+/*
+   John
+   Joe
+   Jane
+   Karen
+   Anastasia
+/*
+
+```
+#### break out the outer loop from within the inner loop.
+1. We want to find a user that likes a particular thing and break out the entire loop
+2. we want to break the entire loop and not continue looping
+3. $found = $user because we returning entire user
+4. It skips first user john, why?
+5. Because the Break will only break the $like foreach and not the $users foreach
+```php
+
+$users = [
+    [
+        'username' => 'jane',
+        'likes' => ['cats', 'food'],
+    ],
+    [
+        'username' => 'john',
+        'likes' => ['code', 'cats', 'food'],
+    ],
+    [
+        'username' => 'joe',
+        'likes' => ['code', 'cats', 'music'],
+    ],
+];
+
+$toFind = 'code';
+$found = null;
+
+foreach ($users as $user) {
+    foreach ($user['likes'] as $like) {
+        if ($like === $toFind) {
+            $found = $user;
+            break;
+        }
+    }
+}
+
+var_dump($found);
+
+/*
+  'username' => string 'joe' (length=3)
+  'likes' => 
+    array (size=3)
+      0 => string 'code' (length=4)
+      1 => string 'cats' (length=4)
+      2 => string 'music' (length=5)
+*/
+```
+5. What we can do to resolve is that we can actually define multiple levels we want to break of.
+```php
+$toFind = 'code';
+$found = null;
+
+foreach ($users as $user) {
+    foreach ($user['likes'] as $like) {
+        if ($like === $toFind) {
+            $found = $user;
+            // break 1; //   'username' => string 'joe' (length=3) // same result
+            break 2; //   'username' => string 'john' (length=4)
+        }
+    }
+}
+
+var_dump($found);
+
+/*
+array (size=2)
+  'username' => string 'john' (length=4)
+  'likes' => 
+    array (size=3)
+      0 => string 'code' (length=4)
+      1 => string 'cats' (length=4)
+      2 => string 'food' (length=4)
+*/
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
