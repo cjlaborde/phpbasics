@@ -26,6 +26,7 @@
         <li><a href="/16-the-while-and-do-while-loop">The While and Do While Loops</a></li>
         <li><a href="/17-the-for-each">The FOREACH loop</a></li>
         <li><a href="/18-breaking-and-continuing">Breaking and continuing</a></li>
+        <li><a href="/19-dumping">Dumping</a></li>
     </ul>
 </body>
 </html>

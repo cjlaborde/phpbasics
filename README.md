@@ -51,6 +51,10 @@
       - [Break](#break)
       - [continuing](#continuing)
       - [break out the outer loop from within the inner loop.](#break-out-the-outer-loop-from-within-the-inner-loop)
+    - [Dumping](#dumping)
+      - [xdebug](#xdebug)
+      - [using <pre>](#using-pre)
+      - [print_r](#print_r)
 
 ### Variables
 1. String
@@ -2328,9 +2332,117 @@ array (size=2)
 
 ```
 
+### Dumping
+1. We been using var_dump() that not only give us the value but the type as well.
+2. We can use it on arrays and other different data types
+3. Is important to find out what exactly going on with your code before you start doing things like looping
+4. While this is usually useful for large complex arrays or objects
+```php
+$names = ['alex' => 27, 'billy' => 23];
 
+var_dump($names);
+/*
+   array (size=2)
+     'alex' => int 27
+     'billy' => int 23
+*/
+```
+5. We see that this is an array with 2 items
+6. We see the contents of the array
+7. Including the data types of the value int
+8. Now what happens if we have a different structure.
+```php
+$names = [
+    ['name' => 'John', 'age' => 28],
+    ['name' => 'Joe', 'age' => 33]
+];
 
+var_dump($names);
 
+/*
+
+array (size=2)
+  0 => 
+    array (size=2)
+      'name' => string 'John' (length=4)
+      'age' => int 28
+  1 => 
+    array (size=2)
+      'name' => string 'Joe' (length=3)
+      'age' => int 33
+*/
+
+```
+9. Now We get 2 array items and each of these items are numerically indexes starting at 0 and we have an array inside each and we can see the data type of each and their string length
+10. In this example we know what exactly what we working on. So we really don't need to do a var_dump on it.
+11. But if this was something returned from database or part of another package or from an API get request,
+
+#### xdebug
+1. With xdebug the return from var_dump will look a lot better organized.
+
+#### using <pre>
+1. <pre> pretax preserves the format of what you are trying to var_dump()
+```php
+$users = [
+    ['name' => 'John', 'age' => 28],
+    ['name' => 'Joe', 'age' => 33]
+];
+
+echo '<pre>',
+  var_dump($users),
+'</pre>';
+/*
+array (size=2)
+  0 => 
+    array (size=2)
+      'name' => string 'John' (length=4)
+      'age' => int 28
+  1 => 
+    array (size=2)
+      'name' => string 'Joe' (length=3)
+      'age' => int 33
+*/
+```
+
+#### print_r
+1. If you want to find out very quicky what you working with.
+2. As you see we get slightly less compless output
+```php
+$users = [
+    ['name' => 'John', 'age' => 28],
+    ['name' => 'Joe', 'age' => 33]
+];
+
+print_r($users); 
+// Array ( [0] => Array ( [name] => John [age] => 28 ) [1] => Array ( [name] => Joe [age] => 33 ) )
+```
+3. You can also use print_r <pre>
+4. As you can see is easier to see what is going on. Particulary for more complex things.
+5. If you don't need to see the value type like integer or string
+```php
+echo '<pre>', print_r($users), '</pre>';
+
+/*
+Array
+(
+    [0] => Array
+        (
+            [name] => John
+            [age] => 28
+        )
+
+    [1] => Array
+        (
+            [name] => Joe
+            [age] => 33
+        )
+
+)
+1
+*/
+```
+6. If you struggle with anything or trying to work out the value is or how an array is structured
+7. Just use var_dump and you will be able to imediately to see the state of a variable.
 
 
 
