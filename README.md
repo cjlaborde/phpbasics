@@ -58,6 +58,7 @@
     - [Functions basics](#functions-basics)
       - [Pass optional arguments to a function](#pass-optional-arguments-to-a-function)
       - [Assign a function to a variable](#assign-a-function-to-a-variable)
+    - [Function flexibility](#function-flexibility)
 
 ### Variables
 1. String
@@ -2601,4 +2602,69 @@ echo fullName('Joe', 'Bond'); // Joe Bond
 function fullName ($firstName, $lastName, $separator = ' ') {
     return "{$firstName}{$separator}{$lastName}";
 }
+```
+
+### Function flexibility
+1. if lastName not provided set it to null.
+2. Reason is great to use null for not required variables is that, null is an easy value to check.
+3. We can check if something is null within an if statement.
+4. Then we can do something according to that.
+5. For example what happens if we don't include $lastName
+```php
+function fullName($firstName, $lastName = null, $separator = '_') {
+    return "{$firstName} {$lastName}";
+}
+
+echo fullName('John'); // John_
+}
+```
+6. In this case we can add an if statement to resolve this and not add an _ when no $lastName is provided.
+7. You can have multiple return values within a function if you want.
+8. Reson why the other lines of code are not executed is because when you use return it exists out of the function and return the value.
+```php
+function fullName($firstName, $lastName = null, $separator = '_') {
+    return 'Return here';
+    echo 'Hello.';
+
+    return "{$firstName} {$lastName}"; 
+}
+
+echo fullName('John'); // Return here
+```
+9. We don't need last name and separator because last name is not provided, so we return just $lastName when $firstName not provided.
+```php
+function fullName($firstName, $lastName = null, $separator = '_') {
+   if ($lastName === null) {
+       return $firstName;
+   }
+
+    return "{$firstName}{$separator}{$lastName}"; 
+}
+
+echo fullName('John'); // John
+echo fullName('John', 'Bond'); // John_Bond
+```
+10. You can do almost anything inside function like looping or multiple if statements
+11. Use return alone.
+12. If have all fields empty, there is no need to return anything.
+13. We will also use trim which is a php function that trim out white spaces.
+14. Since we use return; it will actually return null as the value.
+```php
+function fullName($firstName, $lastName = null, $separator = '_') {
+    if (trim($firstName) === '') {
+      return;
+    }
+
+   if ($lastName === null) {
+      return $firstName;
+   }
+
+    return "{$firstName}{$separator}{$lastName}"; 
+}
+
+echo fullName('    '); // 
+```
+15. We can also use a var_dump to see the value is NULL
+```php
+var_dump(fullName('    ')); // NULL
 ```
