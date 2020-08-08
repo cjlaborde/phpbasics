@@ -59,6 +59,9 @@
       - [Pass optional arguments to a function](#pass-optional-arguments-to-a-function)
       - [Assign a function to a variable](#assign-a-function-to-a-variable)
     - [Function flexibility](#function-flexibility)
+    - [func-get-arg](#func-get-arg)
+      - [func-get-arg](#func-get-arg-1)
+      - [Array_sum](#array_sum)
 
 ### Variables
 1. String
@@ -2668,3 +2671,202 @@ echo fullName('    '); //
 ```php
 var_dump(fullName('    ')); // NULL
 ```
+
+### func-get-arg
+1. This works but is not really that flexible.
+2. Since we only allowing 3 numbers to be passed in.
+3. If we wanted to add another argument this would break our code.
+   
+```php
+
+function add($num1, $num2, $num3) {
+    return $num1 + $num2 + $num3;
+}
+
+echo add(5,10,10);
+```
+4. For example if we wanted to add another number we would have to go through code and add another number.
+5. We would get error that we missing a number.
+```php
+function add($num1, $num2, $num3, $num4) {
+    return $num1 + $num2 + $num3;
+}
+
+echo add(5,10,10);
+// Uncaught ArgumentCountError: Too few arguments to function add(), 3 passed in
+```
+6. Possible solution is pass an array instead of numbers
+```php
+$numbers = [5,10,10];
+
+function add($numbers) {
+    return $num1 + $num2 + $num3;
+}
+```
+7. The goal is pass unlimited amount of numbers into this function.
+8. Loop through them and add them up.
+9. You can add type before argument array $numbers.
+10. This tell us we only accept array in.
+```php
+$numbers = [5,10,10];
+
+function add(array $numbers,$result = 0) {
+    foreach ($numbers as $number) {
+    $result += $number;
+    }
+    return $result;
+    
+}
+echo add(1);
+
+// Uncaught TypeError: Argument 1 passed to add() must be of the type array, int given, 
+```
+11. Here we pass array instead and works correctly.
+12. You can also pass the array directly and works same way `echo add( [5,10,10]); // 25`
+```php
+
+$numbers = [5,10,10];
+
+function add(array $numbers) {
+    $result = 0;
+    foreach ($numbers as $number) {
+    $result += $number;
+    }
+    return $result;
+    
+}
+echo add($numbers); // 25
+echo add( [5,10,10]); // 25
+```
+13. There is a more easier way if you just want to take a list of numbers and add them up.
+
+#### func-get-arg
+1. func-get-arg is the predefined get function when used inside of a function.
+2. Will give us an array of all of the arguments that are pass in.
+3. We will define this add() function with no args at all.
+4. then var_dump(func_get_args()) and get 0 results.
+```php
+function add()
+{
+    var_dump(func_get_args()); 
+}
+
+echo add();
+
+/*
+ array (size=0)
+   empty
+*/
+
+```
+5. Now even through we pass no arguments func_get_args will pick them up.
+```php
+echo add( 5,10,10);
+/*
+array (size=3)
+  0 => int 5
+  1 => int 10
+  2 => int 10
+*/
+```
+6. Unsing func_get_args instead of declaring an argument in the function
+7. What we can do is do a foreach since func_get_args returns an array.
+8. You can use either is_numeric or is_int
+9. If the item not numeric then we continue and not add it on.
+10. Let see here what happens when they pass a value they should be there
+```php
+
+function add() {
+    $total = 0;
+    foreach (func_get_args() as $number) {
+
+        $total += $number;
+    }
+    return $total;
+}
+
+echo add(5, 10, 10, 'john');
+
+// 25
+```
+11. Problem is PHP type cast the values and if you were to pass 1john a value would be added giving incorrect value 26
+```php
+
+function add() {
+    $total = 0;
+    foreach (func_get_args() as $number) {
+
+        $total += $number;
+    }
+    return $total;
+}
+
+echo add(5, 10, 10, '1john');
+// 26
+```
+12. So if it a string we want to ignore it and get correct value 25.
+```php
+function add() {
+    $total = 0;
+    foreach (func_get_args() as $number) {
+
+    if (!is_numeric($number)) {
+        continue;
+    }
+        $total += $number;
+    }
+    return $total;
+}
+echo add(5, 10, 10, '1john'); // 25
+```
+13. There is a lot of code so we can shorter it down.
+
+#### Array_sum
+1. Here we will shorter the code down using array_sum which will add up every value withing an array.
+```php
+echo array_sum([5, 10, 10]); // 25
+
+```
+2. By combining Array_sum and func_get_args we can do it in 1 line.
+```php
+function add() {
+    return array_sum(func_get_args());
+}
+
+echo add(5, 10, 10); // 25
+echo add(5, 10, 10, '1john'); // 26
+```
+3. This code a lot shorter problem is that is it not type safe.
+4. Shorter is not always better, simpler to read is better.
+5. If someone else would work on your code they will know is an array
+6. As well is type safe.
+```php
+function add(array $numbers) {
+    $result = 0;
+    foreach ($numbers as $number) {
+    if (!is_numeric($number)) {
+        continue;
+    }
+    $result += $number;
+    }
+    return $result;   
+}
+$numbers = [5, 10, 10 , '1john'];
+
+echo add($numbers);
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
