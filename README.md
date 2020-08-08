@@ -65,6 +65,10 @@
     - [lets talk about scope](#lets-talk-about-scope)
       - [global](#global)
       - [use keyword](#use-keyword)
+    - [Breaking up files](#breaking-up-files)
+      - [require_once && include_once](#require_once--include_once)
+      - [why break code?](#why-break-code)
+      - [Create separated function](#create-separated-function)
 
 ### Variables
 1. String
@@ -2967,3 +2971,115 @@ echo $fullName('John', 'Bond'); // John_Bond
 5. Because if we create variables inside the function they could conflict with outside variables.
 6. Functions have their own scope and there different ways we can bring variables into a function.
 7. Either a) using global keyword or use 'use' keyword if we define our function inside a variable.
+
+### Breaking up files
+1. If we were to write everything in 1 file.
+2. we create new file hello.php side of index.php
+3. Now we will write code in hello.php that index.php can reuse.
+```php
+hello.php
+<?php
+
+echo 'Hello';
+
+```
+4. Now you will not see anything index.php to make it work we either use require or include
+```php
+index.php
+<?php
+
+include 'hello.php';
+
+```
+5. Now // hello gets displayed on index.php
+6. You can also use require
+```php
+require 'hello.php';
+
+
+```
+7. Difference is that if there was an error in hello.php or could not find the file the code would break.
+8. As you see it show error message and skip displaying the echo
+```php
+
+require 'goodbye.php';
+
+
+echo 'Hello rest of our code.';
+//  ) Fatal error: require(): Failed opening required 'goodbye.php'
+```
+9. With include it will show error message but still output the echo
+```php
+
+include 'goodbye.php';
+
+echo 'Hello rest of our code.';
+// Warning: include(goodbye.php): failed to open stream: No such file or directory in
+
+// Hello rest of our code.
+```
+10. Recommendation: **Always use required**
+11. Because you don't want rest of your code to run if you require a file.
+
+#### require_once && include_once
+1. They both similar to include and require
+```php
+include_once 'hello.php';
+require_once 'hello.php';
+```
+2. With include once it will only output once no matter how many times we output it.
+```php
+
+include_once 'hello.php';
+include_once 'hello.php';
+include_once 'hello.php';
+include_once 'hello.php';
+
+// hello
+```
+3. require_once will only run once and will stop code if there is a problem.
+
+#### why break code?
+1. Because when you write basic applications you want to separate functions into their own file
+2. As well separate the code into different parts.
+3. Defining configuration and you want to separate from everything else
+4. You may want to require something in only on a particular condition
+5. Perhaps within an if statement
+
+#### Create separated function
+1. Now we will create new folder named functions
+2. create file named user.php inside
+```php
+
+function fullName ($firstName, $lastName) {
+    return "{$firstName} {$lastName}";
+}
+```
+3. Now we can reuse this function in any file by using require
+4. Lets say we have an index.php and user.php that list out a list of users.
+5. 2 different files that perhaps want to use same fullName function
+6. inside index.php
+```php
+// index.php
+require 'functions/user.php';
+
+echo fullName('John', 'Bond');
+// John Bond
+```
+7. Now I want users.php to use same function by using require and get same result.
+```php
+// user.php
+
+require 'functions/user.php';
+
+
+echo fullName('John', 'Bond');
+
+// John Bond
+```
+8. In Object oriented programming instead of using require you use auto loading.
+
+
+
+
+

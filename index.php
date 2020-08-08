@@ -31,6 +31,7 @@
         <li><a href="/21-function-flexibility">Function flexibility</a></li>
         <li><a href="/22-func-get-arg">func_get_args</a></li>
         <li><a href="/23-lets-talk-about-scope">Let's talk about scope</a></li>
+        <li><a href="/24-breaking-up-files">Breaking up files</a></li>
     </ul>
 </body>
 </html>
