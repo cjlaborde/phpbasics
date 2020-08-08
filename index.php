@@ -30,6 +30,7 @@
         <li><a href="/20-function-basics">Function basics</a></li>
         <li><a href="/21-function-flexibility">Function flexibility</a></li>
         <li><a href="/22-func-get-arg">func_get_args</a></li>
+        <li><a href="/23-lets-talk-about-scope">Let's talk about scope</a></li>
     </ul>
 </body>
 </html>

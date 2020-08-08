@@ -62,6 +62,9 @@
     - [func-get-arg](#func-get-arg)
       - [func-get-arg](#func-get-arg-1)
       - [Array_sum](#array_sum)
+    - [lets talk about scope](#lets-talk-about-scope)
+      - [global](#global)
+      - [use keyword](#use-keyword)
 
 ### Variables
 1. String
@@ -2856,17 +2859,111 @@ $numbers = [5, 10, 10 , '1john'];
 echo add($numbers);
 ```
 
+### lets talk about scope
+1. Lets talk about functions since they have their own scope.
+2. Lets imagine we have configuration store within an array.
+3. Lets say we have separator here so is accesible everywhere in our code.
+4. Reason we add something to config is that we can use it over and over again.
+5. As well always want the same a '  ' is a lot more convenient to store it in one place and reuse it.
+6. Aditionally if we wanted to use _ instead of ' ' and wanted to change it everywhere it would be easier to do.
+```php
+$config = [
+    'separator' => ' '
+];
 
+function fullName($firstName, $lastName) {
+    return "{$firstName} {$config['separator']} {$lastName}";
+}
 
+echo fullName('John', 'Bond');
 
+// : Undefined variable: config 
 
+```
+7. Why are we seeing this error? When we do have the variable $config defined.
+8. The reason is because $config can't be found within the scope of fullName.
+9. $config is out of scope.
+10. Everything we have inside fullName brackers can't be available outside or viceversa 
+11. Here is another example
+```php
+function fullName($firstName, $lastName) {
+  $greeting = 'hello';
+    return "{$firstName} {$config['separator']} {$lastName}";
+}
+echo $greeting;
 
+echo fullName('John', 'Bond'); 
+//  Undefined variable: greeting 
+```
+12. Here we have same out of scope issue. You can't access variables declared inside a function.
+13. As well we can't access variables declared outside the function.
+14. One of the reason is that if you declaring local variables inside a function you don't want them to interfere with anything else outside.
+```php
+$config = [
+    'separator' => ' '
+];
 
+function fullName($firstName, $lastName) {
+    $greeting = 'hello';
+      return "{$firstName} {$lastName}";
+  }
+  echo $greeting;
+  
+  echo fullName('John', 'Bond');
 
+```
+15. There are a couple of ways to get around this.
+#### global
+1. Here we will use global
+2. global will bring all values declared in config inside the function
+```php
+$config = [
+    'separator' => '_'
+];
 
+function fullName($firstName, $lastName) {
+      global $config;
+      return "{$firstName}{$config['separator']}{$lastName}";
+  }
+  
+  echo fullName('John', 'Bond'); // John Bond
+```
+3. Now it works correcly
+4. Another way is passing config as an argument
+```php
+$config = [
+    'separator' => '_'
+];
 
+function fullName($firstName, $lastName, $config) {
+      return "{$firstName}{$config['separator']}{$lastName}";
+  }
+  
+  echo fullName('John', 'Bond', $config); // John Bond
+```
 
+#### use keyword
+1. Here we will use the use keyword which is more cleaner and no need to declare it as global inside.
+```php
+function fullName($firstName, $lastName) use ($config) {
+    return "{$firstName} {$config['separator']} {$lastName}";
+}
 
+echo fullName('John', 'Bond');
 
+// Parse error: syntax error, unexpected 'use' (T_USE), expecting '{'
+```
+2. This will give error since when we 'use' the function is different than when we assign it to a variable.
+```php
 
+$fullName = function ($firstName, $lastName) use ($config) {
+    return "{$firstName} {$config['separator']} {$lastName}";
+};
 
+echo $fullName('John', 'Bond'); // John_Bond
+```
+3. This will work correctly and bring the variable config inside the scope of the function using  'use'
+4. There are various reasons why we don't bring variables inside the scope of a function.
+5. Because if we create variables inside the function they could conflict with outside variables.
+6. Functions have their own scope and there different ways we can bring variables into a function.
+7. Either a) using global keyword or use 'use' keyword if we define our function inside a variable.
