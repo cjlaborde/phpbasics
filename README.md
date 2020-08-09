@@ -75,7 +75,8 @@
       - [Form submitting with $_POST](#form-submitting-with-_post)
     - [Ternary Operator](#ternary-operator)
       - [Null Coalescing Operator](#null-coalescing-operator)
-    - [Short hard way to do ternary operator](#short-hard-way-to-do-ternary-operator)
+      - [Short hard way to do ternary operator](#short-hard-way-to-do-ternary-operator)
+    - [Commeting](#commeting)
 
 ### Variables
 1. String
@@ -3333,7 +3334,7 @@ echo $page;
 5. If the term is very simple use ternary operator to clean up amount of lines of code.
 6. If it more complex check then is not good idea to use ternary operator or you will come with a long time to read and maintain
 
-### Short hard way to do ternary operator
+#### Short hard way to do ternary operator
 1. What if we wanted to show word zero if it was in fact a zero balance?
 ```php
 $balance = 10;
@@ -3358,12 +3359,41 @@ echo 'Your available balance is ' . $availableBalance; // Your available balance
 5. Make sure to use ternary only to shorten code and nothing more complex.
 
 
+### Commeting
+1. Commenting code in any language is helpful when you need to describe in plain language what piece of code does.
+2. Is important that there is not need to comment everything.
+3. just comment things that may help others and yourself understand what your code is doing.
+4. When you learning is great practice to comment so when you refer back a code you know exactly what you have done.
+5. There 2 types of comments in php
+6. 1) single line comments //  $name = 'john'; You can also comment after the line of code not after in same lines
+```php
+// Define a person's name;
+ $name = 'john';
+ $name = 'john'; // Define a person's name;
+```
+8. When php compile the script it will ignore the comments.
+9. This is just example and you should not comment very obvious things like declaring name.
 
+10. You will also come to more useful comments like dot blocks.
+11. 2) block comments
+```php
+/*
+    if ($balance === 0) {
+        $balance = 'zero';
+    }
+*/
+```
+12.  Another way that you find usually in docblocks
+```php
+/*
+ * This function takes a string
+ * and strip the whitespace
+ *
+*/
 
+function removedWhitespace() {
 
-
-
-
-
-
-
+}
+```
+13.  Comments are great to remind you what you have done when the complex is complex
+14.  Also great way to quickly learn about other people code.
