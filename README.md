@@ -73,6 +73,9 @@
       - [$_GET superglobal](#_get-superglobal)
       - [isset](#isset)
       - [Form submitting with $_POST](#form-submitting-with-_post)
+    - [Ternary Operator](#ternary-operator)
+      - [Null Coalescing Operator](#null-coalescing-operator)
+    - [Short hard way to do ternary operator](#short-hard-way-to-do-ternary-operator)
 
 ### Variables
 1. String
@@ -3272,10 +3275,87 @@ echo $_POST['password']; // pass123
 21. As well sign users in.
 
 
+### Ternary Operator
+1. Remember when we used the $_GET superglobals we had the problem where we needed to check in case we run into problems.
+2. <http://phpbasics.test/26-ternary-operator?page=1>
+```php
+<?php
 
+echo $_GET['page']; // 1
 
+```
+2. If you remove the query <http://phpbasics.test/26-ternary-operator> // Notice: Undefined index: page in.
+3. In production server where you turn errors off users will not see errors but this will break the page.
+4. So we want to check if $_GET['page'] is set then only do something if it.
+5. We going to set the page default as page 1, if it not suplied on the query.
+6. <http://phpbasics.test/26-ternary-operator>
+```php
+<?php
 
+$page = 1;
 
+if (isset($_GET['page'])) {
+    $page = $_GET['page'];
+}
+
+echo $page; // 1
+
+```
+7. If we do set the query it would still work correctly.
+8. <http://phpbasics.test/26-ternary-operator?page=4>  // 4
+9. Now we will show easier way to do this by using ternary operator
+```php
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+echo $page;
+
+//  <http://phpbasics.test/26-ternary-operator?page=4>  // 4
+//  <http://phpbasics.test/26-ternary-operator>  // 1
+```
+10. condition ? (if condition is true)  : (else);
+11. Set page to ($_GET['page'] if isset($_GET['page']) is true else set page as 1.
+12. This can become more complicated by creating a new ternary inside of the conditions.
+13. Even through is better to avoid that as much as possible.
+14. Ternary is very useful when you want to very quickly do something that would take longer with if statement.
+
+#### Null Coalescing Operator
+1. There is even an easier way as long as you running php7
+2. you can use phpinfo() to check your php version inside a file.
+3. Here we will use the shortest version
+```php
+$page =  $_GET['page'] ?? 1;
+
+echo $page;
+//  <http://phpbasics.test/26-ternary-operator?page=8>  // 8
+//  <http://phpbasics.test/26-ternary-operator>  // 1
+```
+4. What this says is that if it set use first value otherwise use 1.
+5. If the term is very simple use ternary operator to clean up amount of lines of code.
+6. If it more complex check then is not good idea to use ternary operator or you will come with a long time to read and maintain
+
+### Short hard way to do ternary operator
+1. What if we wanted to show word zero if it was in fact a zero balance?
+```php
+$balance = 10;
+
+if ($balance === 0) {
+    $balance = 'zero';
+}
+
+echo 'Your available balance is ' . $balance; // Your available balance is zero
+```
+2. This work yet introduce too many lines of code.
+3. Here is a shorter version.
+4. (value we use if true / (false) if it false/zero value don't use it) ?: (then result if it false) 
+```php
+$balance = 0; // zero
+$balance = 10; // 10
+
+$availableBalance = $balance ?: 'zero';
+
+echo 'Your available balance is ' . $availableBalance; // Your available balance is zero
+```
+5. Make sure to use ternary only to shorten code and nothing more complex.
 
 
 

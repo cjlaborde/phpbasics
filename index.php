@@ -33,6 +33,7 @@
         <li><a href="/23-lets-talk-about-scope">Let's talk about scope</a></li>
         <li><a href="/24-breaking-up-files">Breaking up files</a></li>
         <li><a href="/25-post-and-get-superglobals">POST and GET superglobals</a></li>
+        <li><a href="/26-ternary-operator">Ternary Operator</a></li>
     </ul>
 </body>
 </html>
