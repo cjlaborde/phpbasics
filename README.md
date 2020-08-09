@@ -69,6 +69,10 @@
       - [require_once && include_once](#require_once--include_once)
       - [why break code?](#why-break-code)
       - [Create separated function](#create-separated-function)
+    - [Post and get superglobals](#post-and-get-superglobals)
+      - [$_GET superglobal](#_get-superglobal)
+      - [isset](#isset)
+      - [Form submitting with $_POST](#form-submitting-with-_post)
 
 ### Variables
 1. String
@@ -3078,6 +3082,206 @@ echo fullName('John', 'Bond');
 // John Bond
 ```
 8. In Object oriented programming instead of using require you use auto loading.
+
+### Post and get superglobals
+1. We will build form that allows us to submit data through another file
+2. Super global is special name giving to global php variables.
+3. That holds different type of information.
+4. when you see like /pages=3 in url those are picked up by php and other backend languages
+5. Imagine you running a blog and want to link to specific article
+6. We will pass in the url a query string with an unique slug which is basically a string given to a particular record
+7. `http://phpbasics.test/25-post-and-get-superglobals/index.php?slug=learn-php`
+8. They are typically separated by hypens -
+9. When he have a slug we want to pick it up on the server side and look it up in our database
+10. Then show record with this particular slug
+#### $_GET superglobal
+1. superglobal have same format 1) $ sign 2) _ 3) Capital letters GET
+```php
+var_dump($_GET);
+
+/*
+array (size=1)
+  'slug' => string 'learn-php' (length=9)
+*/
+```
+2. Now you get the string slug from the query in the url
+3. We know this is an array and know we can access it's elements
+4. Either by numeric or associate key like the slug
+5. http://phpbasics.test/25-post-and-get-superglobals/index.php?slug=learn-php&page=1
+6. You can add second item with &
+7. now we got 2 items slug and page
+```php
+var_dump($_GET);
+  'slug' => string 'learn-php' (length=9)
+  'page' => string '1' (length=1)
+```
+7. Now lets output the slug in the page  by getting the key
+```php
+// http://phpbasics.test/25-post-and-get-superglobals/index.php?slug=learn-php
+echo $_GET['slug'];
+
+// slug=learn-php
+```
+
+8. How can we change the url without typing
+9. A way is to create links that you can click with the query on them
+10. Remember before we generated a list of page numbers
+11. We can actually use that again and generate a link for each page.
+```php
+$page = $_GET['page'];
+$searchTerm = $_GET['search'];
+$pages = 10;
+
+echo '<h3>Searching for: ' . $searchTerm . '</h3>';
+echo '<p>You are on page ' . $page . '</p>';
+
+// Undefined index: page in 
+```
+12. We get error since you don't have anything in the query. 
+13. That is because we are trying to access something from the $_GET superglobal array.
+14. That does not exist at the moment <http://phpbasics.test/25-post-and-get-superglobals/index.php>
+15. Now lets add them <http://phpbasics.test/25-post-and-get-superglobals/index.php?search=learn php&page=1>
+```
+Searching for: learn php
+You are on page 1
+```
+16. Now the idea is generate a list of of page numbers
+```php
+$page = $_GET['page'];
+$searchTerm = $_GET['search'];
+$pages = 10;
+
+echo '<h3>Searching for: ' . $searchTerm . '</h3>';
+echo '<p>You are on page ' . $page . '</p>';
+
+// Undefined index: page in 
+
+for ($i = 1; $i <= $pages; $i++) {
+  echo '<a href="?search=' . $searchTerm . '&page=' . $i . '">' . $i . '</a> ';
+}
+
+/*
+
+Searching for: learn php
+You are on page 8
+
+1 2 3 4 5 6 7 8 9 10
+
+*/
+```
+17. Problem now is that if we remove queries we get error.
+18. <http://phpbasics.test/25-post-and-get-superglobals/index.php>
+```php
+// Undefined index: page in
+// Undefined index: search in
+```
+#### isset
+1. How to check if values above are set or not.
+2. We will use isset inside an if statement
+3. Inside the isset() we pass a list of anything we need to check.
+4. If it set then when we want to declare the superglobal to a variable.
+5. Now what will happen is that when we do not have search in query string, the block inside the if will not run.
+6. Hence not declaring the variable and getting //  Undefined index: search error message.
+```php
+if (isset($_GET['search'])) {
+  $searchTerm = $_GET['search'];
+  echo '<h3>Searching for: ' . $searchTerm . '</h3>';
+}
+```
+7. Now if you go to <http://phpbasics.test/25-post-and-get-superglobals/index.php> you will see no errors as before
+8. Now write the search query <http://phpbasics.test/25-post-and-get-superglobals/index.php?search=learn%20php>
+```php
+Searching for: learn php
+```
+9. You need to check things since many people will maliciously try to change the url query.
+10. Get action is activated when landing on a page url.
+11. When we using POST we passing some data. Example submiting for to create new user.
+12. Now we will build a form and post it on another page.
+
+#### Form submitting with $_POST
+1. create index.php and remove <?php we will use html to create form.
+2. Form needs 2 items
+3. First is the action= where we want to submit this form through to.
+4. We will pass it to new file and call it signin.php
+5. Second we will pass method= in this case we will define it as post
+6. Then we create 2 inputs with their labels to write the input data
+7. Finally we create button to execute the form with type submit
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="signin.php" method="post">
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username">
+
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password">
+
+        <button type="submit">Sign in</button>
+    </form>
+</body>
+</html>
+```
+8. Because we used post to that file signin.php we can pick up username and password.
+9. Now create new file called signin.php
+```php
+<?php
+
+var_dump($_GET); // array (size=0)
+```
+10. Notice you have empty array
+11. if you were to add to the query <http://phpbasics.test/25-post-and-get-superglobals/signin.php?username=john>
+```php
+array (size=1)
+  'username' => string 'john' (length=4)
+```
+12. What is happening is that this been send through POST method we need to use $_POST instead, since is more secure unlike $_GET
+```php
+<?php
+
+var_dump($_POST);
+```
+13. Now we will see the values passed through the form using post method
+
+```php
+array (size=2)
+  'username' => string 'joe' (length=3)
+  'password' => string 'coool' (length=5)
+```
+
+14.  Now we will output username.
+```php
+echo $_POST['username']; // joe
+```
+15. Now lets output password as well
+```php
+echo $_POST['username'], '<br>'; // joe
+
+echo $_POST['password']; // pass123
+```
+16. Then we would look username in database and check if password matches.
+17. There more things you can do and check is it a hash type password.
+18. $_GET is more for search terms, page numbers.
+19. $_POST you use it for forms to pick up data that was submited in form.
+20. Like registing a new user.
+21. As well sign users in.
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
