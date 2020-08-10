@@ -37,6 +37,7 @@
         <li><a href="/27-commenting">Commenting</a></li>
         <li><a href="/28-finding-php-functions">Finding PHP Functions</a></li>
         <li><a href="/29-submitting-a-form">Submitting a form</a></li>
+        <li><a href="/30-random-quote-generation">Random Quote Generation</a></li>
     </ul>
 </body>
 </html>

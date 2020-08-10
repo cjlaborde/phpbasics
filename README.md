@@ -85,6 +85,7 @@
       - [number_format](#number_format)
       - [Redirect to another page using header](#redirect-to-another-page-using-header)
     - [Submitting a form](#submitting-a-form)
+    - [Random Quote Generator](#random-quote-generator)
 
 ### Variables
 1. String
@@ -3747,3 +3748,85 @@ if (empty(trim($name))) {
 echo "Greetings {$_POST['name']}!";
 ```
 15. Here we implemented a form and added extra logic to make sure we have the values that we need.
+
+### Random Quote Generator
+1. Here we will build a app that everytime we reload the page it shows a new random quote.
+2. We already learned about generating random numbers and arrays.
+3. The we refactor it so code is a little shorter and cleaner.
+4. Here we have an array of arrays then we have an associate array.
+5. All these quotes have an author and text.
+6. First we need to figure out how to extract a random quote from this list.
+7. Here Is how I did this on my own.
+```php
+$quote = $quotes[rand(0, array_key_last($quotes))];
+// count gave error when it could not find array offset 5  Notice: Trying to access array offset on value of type null in
+// https://stackoverflow.com/questions/3687358/whats-the-best-way-to-get-the-last-element-of-an-array-without-deleting-it
+// https://www.php.net/manual/en/function.array-key-last.php
+
+echo '<h2>"' . $quote['text'] . '"</h2>';
+echo '<h4>- ' . $quote['author'] . '</h4>';
+```
+8. Now we will follow the actual course.
+9. we used -1 since it will count items to be 4. Yet the highest offset is actually 4 not 5.
+10. We will use var_dump since it will output an array otherwise with echo would give error.
+```php
+$quote = $quotes[rand(0, count($quotes) -1)];
+
+var_dump($quote);
+```
+11. Now we will add html to display the quotes.
+```php
+$quote = $quotes[rand(0, count($quotes) -1)];
+$quoteText = $quote['text'];
+$quoteAuthor = $quote['author'];
+
+?>
+```
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random quote</title>
+</head>
+<body>
+    <blockquote>
+        <h2>&ldquo;<?php echo $quoteText; ?>&ldquo;</h2>
+        <strong>- <?php echo $quoteAuthor; ?></strong>
+    </blockquote>
+</body>
+</html>
+```
+12. Usually better to use a html template like Laravel Blade or symfony twig
+13. Yet to display php code on page do this. <?php "code to output" ?>
+```php
+        <h2>&ldquo;<?php echo $quoteText; ?>&ldquo;</h2>
+```
+14. Alternative you can use short method
+```php
+        <h2>&ldquo;<?= echo $quoteText; ?>&ldquo;</h2>
+```
+15. Yet is better to use <?php since is more clear.
+16. Now There is a better shorter way to write the php code.
+17. We will use die(); or exit() both do same. 
+18. We use die() to kill the execution of the script.
+19. Now we can test code, we will use array_rand() this time to see how it works visit
+20. <https://www.php.net/manual/en/function.array-rand.php>
+21. As you see it returns a random array item by it's key, not actual value.
+22. $quote = $quotes[rand(0, count($quotes) -1)]; does the same thing but array_rand() is more convenient and easier to read and understand.
+```php
+$quote = array_rand($quotes);
+// $quote = $quotes[rand(0, count($quotes) -1)];
+
+var_dump($quote); // int 4
+
+die();
+```
+23. Now we can use this code and as you see is more cleaner and easier to read.
+```php
+$quote = $quotes[array_rand($quotes)];
+
+$quoteText = $quote['text'];
+$quoteAuthor = $quote['author'];
+```
