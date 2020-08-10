@@ -53,7 +53,7 @@
       - [break out the outer loop from within the inner loop.](#break-out-the-outer-loop-from-within-the-inner-loop)
     - [Dumping](#dumping)
       - [xdebug](#xdebug)
-      - [using <pre>](#using-pre)
+      - [using < pre >](#using--pre-)
       - [print_r](#print_r)
     - [Functions basics](#functions-basics)
       - [Pass optional arguments to a function](#pass-optional-arguments-to-a-function)
@@ -2415,7 +2415,7 @@ array (size=2)
 #### xdebug
 1. With xdebug the return from var_dump will look a lot better organized.
 
-#### using <pre>
+#### using < pre >
 1. <pre> pretax preserves the format of what you are trying to var_dump()
 ```php
 $users = [
