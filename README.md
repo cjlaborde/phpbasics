@@ -84,6 +84,7 @@
       - [empty](#empty)
       - [number_format](#number_format)
       - [Redirect to another page using header](#redirect-to-another-page-using-header)
+    - [Submitting a form](#submitting-a-form)
 
 ### Variables
 1. String
@@ -3675,9 +3676,74 @@ echo "You are redirected here"; // You are redirected here
 8. You can redirect them to homepage or error page etc.
 9. Always good idea to read the manual before you start using a php function.
 
+### Submitting a form
+1. Create a form in index.php
+```php
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="29-submitting-a-form/name.php" method="post">
+        <label for="name">Your name</label>
+        <input type="text" name="name" id="name">
+        <button type="submit">Greet me</button>
+    </form>
+</body>
+</html>
+```
+2. The create fime name.php
+```php
+echo "Greetings {$_POST['name']}!"; // Greetings John!
+```
+3. Now we going to redirect back after form been submitted.
+4. We going to use the full path in this case.
+```php
+echo "Greetings {$_POST['name']}!";
 
+header('Location: http://phpbasics.test/29-submitting-a-form');
 
+```
+5. Now we going to identify if the submited form is not empty
+6. Other you get
+```php
+echo "Greetings {$_POST['name']}!"; // Greetings !
+```
+7. Now we will redirect the user if they don't provide a name.
+```php
+// By default we set it to null
+$name = $_POST['name'] ?? null; // nothings happens
+$name = $_POST['name'] ?? 'abc'; // nothings happens as well
 
+echo "Greetings {$_POST['name']}!";
+```
 
+8. Reason why nothing happens is that `$_POST['name'] ?? null;` is checking if value is set.
+9. So we will set it to null in case it has not been set.
+10. Then we redirect user if they have not provided the name.
+```php
+$name = $_POST['name'] ?? null;
 
+if (empty($name)) {
+    header('Location: http://phpbasics.test/29-submitting-a-form');
+}
 
+echo "Greetings {$_POST['name']}!";
+```
+11. Now if you send form empty it will redirect back instantly.
+12. Now what happens if we type a lot of spaces?
+13.  // Greetings ! it will not work properly so we need to use trimed
+14.  To resolve this best action to do is trim name first and them check if it empty.
+```php
+$name = $_POST['name'] ?? null;
+
+if (empty(trim($name))) {
+    header('Location: http://phpbasics.test/29-submitting-a-form');
+}
+
+echo "Greetings {$_POST['name']}!";
+```
+15. Here we implemented a form and added extra logic to make sure we have the values that we need.
