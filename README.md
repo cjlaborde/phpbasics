@@ -86,6 +86,10 @@
       - [Redirect to another page using header](#redirect-to-another-page-using-header)
     - [Submitting a form](#submitting-a-form)
     - [Random Quote Generator](#random-quote-generator)
+    - [Build an image gallery](#build-an-image-gallery)
+      - [using in_array](#using-in_array)
+      - [Close directory](#close-directory)
+      - [output the images in html](#output-the-images-in-html)
 
 ### Variables
 1. String
@@ -3829,4 +3833,319 @@ $quote = $quotes[array_rand($quotes)];
 
 $quoteText = $quote['text'];
 $quoteAuthor = $quote['author'];
+```
+
+### Build an image gallery
+1. We going to build mini image gallery which will read images from a directory.
+2. Then display them on the page.
+3. We also going to add error handing.
+4. That will display error message if images directory does not excist or there not images inside.
+5. We will first learn how php read things from a directory.
+6. Then we will take that functionality and take it into a function.
+7. Which allow us to use it anywhere else if we need to.
+8. The way we read directory is using php function called readdir()
+9. <https://www.php.net/manual/en/function.readdir.php>
+10. Create images directory then put images on it.
+11. First thing you do is declare the dictory and use opendir();
+12. opendir — Open directory handle <https://www.php.net/manual/en/function.opendir.php>
+13. lets do a var_dump to see what we working with.
+```php
+$directory = opendir('images');
+
+var_dump($directory);
+// resource(5, stream)
+```
+14. resource is another data type like int, floats, strings, arrays, objects at the moment this is a stream.
+15. This will contain all the information of this directory but not in a traditional sense.
+16. It will be someone we can iterrate over or extract information from.
+17. Since is more complex and representing a directory and more complicated than an array.
+18. Now to list through all of the images, we need to do this in a while loop.
+19. What we do is placing the assignment of reading this directory inside a loop.
+20. What it will do is pull each of the files in a while loop.
+21. So we know we looping through all of files.
+22. What we will do is pull up the resource $directory and read from it.
+23. Will loop while we have no more files to loop through.
+24. We do it in a while loop so then inside the bracket we do what we want with the files.
+25. Now what is the $imageFile ? we will do a var_dump and check it out.
+```php
+$directory = opendir('images');
+
+// var_dump($directory);
+
+while ($imageFile = readdir($directory)) {
+    var_dump($imageFile);
+}
+
+/*
+    phpbasics/31-build-an-image-gallery/index.php:8:string '..' (length=2)
+    phpbasics/31-build-an-image-gallery/index.php:8:string 'AmamiOshimaIsland.png' (length=21)
+    phpbasics/31-build-an-image-gallery/index.php:8:string 'Kyushu.png' (length=10)
+    phpbasics/31-build-an-image-gallery/index.php:8:string '.' (length=1)
+    phpbasics/31-build-an-image-gallery/index.php:8:string 'YamaguchiBridge.png' (length=19)
+*/
+```
+25. The result is bunch of strings.
+26. There are results that are not images that we don't want to display.
+27. So later we need to figure out how to remove these.
+```php
+/*
+    phpbasics/31-build-an-image-gallery/index.php:8:string '..' (length=2)
+    phpbasics/31-build-an-image-gallery/index.php:8:string '.' (length=1)
+*/
+```
+28. Now that we know how to open a directory and go and list through the files with a while loop.
+29. While loop will run till the condition is false.
+30. So is it reading, will eventually reach the end of the file and not read anymore.
+31. To do this we will build a function in a separate file.
+32. directoryreader.php It will be able to be reused lated for any other file than images.
+33. Then create function directoryReader inside.
+34. Then we need to figure out what we need to pass to this function as arguments.
+35. 1) We need to know the directory we actually want to open.
+36. 2) Then have an array of excluded files.
+37. We actually going to set up excluded files within the arguments, so that when ever we use this.
+38. We can change which files we want to exclude.
+39. We going to give $excludeFiles a default value.
+40. Then write lists of files we want to exclude.
+41. We can overwrite the defaults when we call this function since we declaring it on the argument.
+```php
+function directoryReader ($directory, array $excludeFiles = ['.', '..', '.DS_Store']) {
+
+}
+```
+42. The '.' means current directory.
+43. The '..' means back directory.
+44. Now we need to return a list of imagines.
+45. So going to initialize a variables called $images as an empty array []
+46. What we going to do here is (Always helpful to comment out what you plan to do)
+```php
+function directoryReader ($directory, array $excludeFiles = ['.', '..', '.DS_Store']) {
+  $images = [];
+
+  // loop through the files
+  // do some checks
+  // add to $images
+  // return $images
+}
+```
+47. Just think about steps we going to take.
+48. Lets try to include this from this index.php file.
+49. We will see some problems around the way. Just as directory doesn't exist.
+50. Lets do a require and then write inside parentesis the directory images that we plan to open.
+51. Remember we going to return a list of images so we declare it as a variable named $images
+```php
+require 'directoryreader.php';
+
+// we going to open images directory
+$images = directoryreader('images');
+```
+52. We give page a refresh and see nothing is happening.
+53. First we check if a directory exist that we specified in $directory using
+54. is_dir — Tells whether the filename is a directory <https://www.php.net/manual/en/function.is-dir.php>
+55. I am using ! not since if this is not a directory then from function I want to return null
+```php
+function directoryReader ($directory, array $excludeFiles = ['.', '..', '.DS_Store']) {
+  $images = [];
+
+     if (!is_dir($directory)) {
+        return null;
+    }
+}
+```
+66. Then on index.php we check if function return null then display error.
+```php
+require 'directoryreader.php';
+
+// we going to open images directory
+$images = directoryreader('images');
+
+if (!$images) {
+    die ('Could not load files.');
+}
+```
+67. Reason we return true is just temporally till we have the images in.
+```php
+
+function directoryReader ($directory, array $excludeFiles = ['.', '..', '.DS_Store']) {
+    $images = [];
+
+    if (!is_dir($directory)) {
+        return null;
+    }
+
+    return true;
+}
+```
+68. Now we going to write directory that doesn't exist to properly test the is_dir
+```php
+// $images = directoryreader('images');
+$images = directoryreader('cats');
+```
+69. We going to create another if statement that checks the result of open_dir statement
+70. We going to do a check same time as assigning.
+71. We change $images to $files to keep function generic to be able to be reused in the future.
+72. return null if there was a problem opening opendir($directory)
+```php
+function directoryReader ($directory, array $excludeFiles = ['.', '..', '.DS_Store']) {
+    $files = [];
+
+    if (!is_dir($directory)) {
+        return null;
+    }
+
+    if (($fileDirectory = opendir($directory))) {
+        return null;
+    }
+}
+```
+73. So now we check if directory excist then if we could open the directory.
+74. Removing would still work but you will also get warning error message if you remove it.
+75. Since first we want to do if that directory excist.
+```php
+    if (!is_dir($directory)) {
+        return null;
+    }
+
+```
+76. Now we want to loop through the files.
+77. We going to check outside of parentesis that it doesn't equal false.
+78. Otherwise you will come accross some problems.
+79. We get error Could not load files. Because is still not returning images.
+```php
+    // loop through the files
+    while (($file = readdir($fileDirectory)) !== false) {
+      var_dump($file);
+    }
+
+/*
+   phpbasics/31-build-an-image-gallery/directoryreader.php:18:string '..' (length=2)
+   phpbasics/31-build-an-image-gallery/directoryreader.php:18:string 'AmamiOshimaIsland.png' (length=21)
+   phpbasics/31-build-an-image-gallery/directoryreader.php:18:string 'Kyushu.png' (length=10)
+   phpbasics/31-build-an-image-gallery/directoryreader.php:18:string '.' (length=1)
+   phpbasics/31-build-an-image-gallery/directoryreader.php:18:string 'YamaguchiBridge.png' (length=19)
+    Could not load files.
+*/
+
+```
+80. Now we will check if any of the files in the while loop matches any of the $excludeFiles.
+81. Now if it does match excluded file we want to skip it using continue; Which ignore the file
+82. Reason we doing this is because we will append results to the $files[] array.
+83. We going to take the directory then concatinate a '/' and then concatinate the $file.
+```php
+    // loop through the files
+    while (($file = readdir($filesDirectory)) !== false) {
+        // var_dump($file);    
+        $files[] = $directory . '/' . $file;
+    }
+
+    return $files;
+```
+84. Then on index.php we will see what the function returns using var_dump
+
+```php
+index.php
+$images = directoryreader('images');
+var_dump($images);
+
+phpbasics/31-build-an-image-gallery/index.php:22:
+array (size=5)
+  0 => string 'images/..' (length=9)
+  1 => string 'images/AmamiOshimaIsland.png' (length=28)
+  2 => string 'images/Kyushu.png' (length=17)
+  3 => string 'images/.' (length=8)
+  4 => string 'images/YamaguchiBridge.png' (length=26)
+```
+85.  How do we check a $file is within an array?
+
+#### using in_array
+
+1. Using in_array function <https://www.php.net/manual/en/function.in-array.php>
+2. in_array — Checks if a value exists in an array.
+3. in_array(what you looking for(would be string or array), the array you looking into)
+4.  We will skip items contained within the array of $excludeFiles
+```php
+    while (($file = readdir($filesDirectory)) !== false) {
+        if (in_array($file, $excludeFiles)) {
+          continue;
+        }
+        $files[] = $directory . '/' . $file;
+    }
+
+    return $files;
+
+/*
+    array (size=3)
+      0 => string 'images/AmamiOshimaIsland.png' (length=28)
+      1 => string 'images/Kyushu.png' (length=17)
+      2 => string 'images/YamaguchiBridge.png' (length=26)
+*/
+```
+#### Close directory
+1. Is not necessary yet good practice to do so <https://www.php.net/manual/en/function.closedir>
+2. closedir — Close directory handle 
+```php
+    while (($file = readdir($filesDirectory)) !== false) {
+        if (in_array($file, $excludeFiles)) {
+          continue;
+        }
+        $files[] = $directory . '/' . $file;
+    }
+
+    closedir($filesDirectory);
+
+    return $files;
+```
+3. That completes our function directoryReader which is a very useful function.
+4. That we can now include in any file.
+5. Then go ahead and use it and pass in what we want to use.
+
+#### output the images in html
+1. Create html template
+2. Then loop through each item in the array.
+3. Then from that create image tag and using that image path for each of those images.
+4. Then display those images.
+5. To use php in html template use <?php ?> then use a normal foreach loop
+6. When using foreach in html is different.
+```php
+// when you use it in php file.
+foreach() {
+
+}
+// When you use it in HTML
+<?php foreach(): ?>
+
+<?php endforeach; ?>
+
+```
+7. Now that we know lets use for each in html to loop through images.
+```php
+<?php
+
+require 'directoryreader.php';
+// we going to open images directory
+$images = directoryreader('images');
+
+if (!$images) {
+    die ('Could not load files.');
+}
+
+?>
+```
+```php
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery</title>
+</head>
+<body>
+    <?php foreach ($images as $image): ?>
+        <img src="31-build-an-image-gallery/<?php echo $image; ?>">
+    <?php endforeach; ?>
+</body>
+</html>
+```
+8. Remember that $image is a path since we added it on directoryreader.php
+```php
+        $files[] = $directory . '/' . $file;
 ```
