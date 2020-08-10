@@ -77,6 +77,13 @@
       - [Null Coalescing Operator](#null-coalescing-operator)
       - [Short hard way to do ternary operator](#short-hard-way-to-do-ternary-operator)
     - [Commeting](#commeting)
+    - [Finding PHP Functions](#finding-php-functions)
+      - [Convert all letters from a name to upper/lower case](#convert-all-letters-from-a-name-to-upperlower-case)
+      - [trim](#trim)
+      - [substr](#substr)
+      - [empty](#empty)
+      - [number_format](#number_format)
+      - [Redirect to another page using header](#redirect-to-another-page-using-header)
 
 ### Variables
 1. String
@@ -3395,5 +3402,282 @@ function removedWhitespace() {
 
 }
 ```
-13.  Comments are great to remind you what you have done when the complex is complex
+13.  Comments are great to remind you what you have done when the complex is complex.
 14.  Also great way to quickly learn about other people code.
+
+### Finding PHP Functions
+1. At some point you going to have to search for different PHP functions.
+2. It would be impossible to cover them all in detail since there is so many of them.
+3. What we going to do is look at php manual and look at few functions and we going to see how we use them and how this is formatted.
+4. Then use them to see how they work.
+5. Lets go to the manual <https://www.php.net/>
+6. For example if I didn't know how to determine a length of a string.
+7. All I would need is search for  "php string length".
+8. From the result try to use the most up today source.
+9. Docs usually the most up to date source so that is what we will use.
+10. <https://www.php.net/manual/en/function.strlen.php>
+11. you can also search on php manual(docs) for string length
+12. As you see you get same result <https://www.php.net/manual/en/function.strlen.php>
+13. now we will see the explanation that says what is going on.
+```php
+Description ¶
+strlen ( string $string ) : int
+Returns the length of the given string.
+```
+14. Most of this should make sense since we already cover different data types.
+15. As well already used some php functions as well.
+16. First you will see is the function name.
+17. This is how we call the function.
+18. Next thing is the description.
+19. This can be very simple or complicated.
+20. Then it gives you a brief description "Returns the length of the given string."
+21. The parameters is what we pass to the function.
+```php
+Parameters ¶
+string
+The string being measured for length.
+```
+22. In this case we have 1 parameter which is a String.
+23. This will return an int value  "strlen ( string $string ) : int"
+24. We also have more information on the return value as well.
+```php
+Return Values ¶
+The length of the string on success, and 0 if the string is empty.
+```
+25. So Parameters are string and return value an integer and 0 if the return is empty.
+```php
+echo strlen('john'); // 4
+```
+26. We can prove this does return integer by using var_dump
+```php
+var_dump(strlen('john')); // int 4
+```
+
+#### Convert all letters from a name to upper/lower case
+1. We can go to manual and search for "upper case"
+2. The we find <https://www.php.net/manual/en/function.strtoupper.php>
+3. Takes a string and return a string with Uppercase
+```php
+echo strtoupper('John'); // JOHN
+```
+4. strtoupper sounds like there may be an alternative to lower case so we do a search on the manual for strtolower.
+5. <https://www.php.net/manual/en/function.strtolower.php>
+6. strtolower ( string $string ) : string
+```php
+echo strtolower('John'); // john
+```
+#### trim
+1. Now search manual for trim and we find <https://www.php.net/manual/en/function.trim>
+2. trim — Strip whitespace (or other characters) from the beginning and end of a string
+```php
+echo trim('               John      '); // John
+```
+3. A way trim is very useful is when counting length of a string, since it will count spaces as well.
+4. You can combine 2 php function as we will do here.
+5. We combine strlen with trim
+```php
+$name = '               John      ';
+
+// echo strlen($name); // 25
+echo strlen(trim($name)); // 4
+```
+4. Now that we know how to use trim lets look at the optional character_mask
+```php
+Parameters ¶
+str
+The string that will be trimmed.
+
+character_mask
+Optionally, the stripped characters can also be specified using the character_mask parameter. Simply list all characters that you want to be stripped. With .. you can specify a range of characters.
+```
+5. It means we can strip other character other than spaces
+```php
+Description ¶
+trim ( string $str [, string $character_mask = " \t\n\r\0\x0B" ] ) : string
+This function returns a string with whitespace stripped from the beginning and end of str. Without the second parameter, trim() will strip these characters:
+
+" " (ASCII 32 (0x20)), an ordinary space.
+"\t" (ASCII 9 (0x09)), a tab.
+"\n" (ASCII 10 (0x0A)), a new line (line feed).
+"\r" (ASCII 13 (0x0D)), a carriage return.
+"\0" (ASCII 0 (0x00)), the NUL-byte.
+"\x0B" (ASCII 11 (0x0B)), a vertical tab.
+```
+6. here we use mask to remove '.'
+```php
+// character_mask
+$name = '.........................John...........';
+
+echo strlen($name); // 40
+echo strlen(trim($name)); // 40
+echo strlen(trim($name, '.')); // 4
+```
+7. ltrim — Strip whitespace (or other characters) from the beginning of a string
+8. <https://www.php.net/manual/en/function.ltrim>
+```php
+$name = '                  John';
+
+echo ltrim($name); // John
+```
+9. We also have rtrim — Strip whitespace (or other characters) from the end of a string
+```php
+$name = 'John           ';
+
+echo rtrim($name);
+```
+
+#### substr
+1. substr — Return part of a string <php.net/manual/en/function.substr>
+2. notice there are [] brackets this is how php identify optional arguments
+```php
+substr ( string $string , int $start [, int $length ] ) : string
+Returns the portion of string specified by the start and length parameters.
+```
+3. for example with length optional If length is omitted, the substring starting from start until the end of the string will be returned.
+4. Now we will crease example using `substr ( string $string , int $start [, int $length ] ) : string 
+5. First we have the string we need to find echo substr($name);
+6. Then we have a start that is an int $start `echo substr($name);` remember that it starts from 0.
+7. Here we would get the full string.
+```php
+$name = 'joe';
+
+echo substr($name, 0); // joe
+```
+8. Now we will use the optional length to catch the first character.
+```php
+echo substr($name, 0, 1); // j
+echo substr($name, 0, 2); // jo
+// if greater then it shows all strings
+echo substr($name, 0, 10); // joe
+```
+
+8. For example if we want to grab half of the string.
+9. so we can use strlen and divide it by 2 and use ceil to round it up
+```php
+$name = 'anastasia';
+
+echo substr($name, 0, ceil(strlen($name) / 2)); // anast
+```
+#### empty
+1. lets look another example
+2. Here is what happens when you provide page with empty value, it does nothing
+```php
+
+$page = $_GET['page'] ?? 1;
+
+echo $page;
+
+// http://phpbasics.test/28-finding-php-functions?page=
+```
+3. So what if we want to search if value is empty.
+4. So lets do a search on "empty" <https://www.php.net/manual/en/function.empty>
+5. empty — Determine whether a variable is empty
+6. As you see it returns a boolean
+7. mixed means that we can pass any type and there is not a specific type that is expected
+```php
+empty ( mixed $var ) : bool
+
+Determine whether a variable is considered to be empty. A variable is considered empty if it does not exist or if its value equals FALSE. empty() does not generate a warning if the variable does not exist.
+```
+8. Now we get 1 when page=
+```php
+$page = $_GET['page'] ?? 1;
+
+if (empty($page)) {
+    $page = 1;
+}
+
+echo $page;
+
+// http://phpbasics.test/28-finding-php-functions?page=
+// 1
+```
+9. empty very useful when you registing user or submiting any form in the database
+10. You want to check if the value provided is empty
+11. You can also combine it with trim to make it even more robbust
+12. By removing spaces then checking if empty
+```php
+$page = $_GET['page'] ?? 1;
+
+if (empty(trim($page))) {
+    $page = 1;
+}
+
+echo $page;
+
+// http://phpbasics.test/28-finding-php-functions?page=
+// 1
+```
+
+#### number_format
+1. number_format — Format a number with grouped thousands.
+2. It can control the decimal format `number_format ( float $number [, int $decimals = 0 ] ) : string`
+3. This number can come from some mathematical calculation.
+```php
+echo $number = 5.65445656; // 5.65445656
+```
+4. Now we use number_format to round the number inside a single number
+```php
+echo number_format($number); // 6
+```
+5. alternatively we can provide number of decimals we want returned.
+```php
+echo number_format($number, 2); // 5.65
+```
+6. More complex we can find the decimal point we want to use.
+```php
+number_format ( float $number , int $decimals = 0 , string $dec_point = "." , string $thousands_sep = "," ) : string
+```
+7. We can also find the thousand separator as well
+8. Lets say we have a large number a billion 1000000000
+```php
+$number =  1000000000;
+echo number_format($number, 2); // 1,000,000,000.00
+echo number_format($number, 0); // 1,000,000,000
+```
+9. This looks strange since we have not set up the `$thousands_sep = ","`
+10. Reason is that these are the default if you don't define your decimals
+```php
+string $dec_point = "." , string $thousands_sep = ","
+```
+11. We can actually overwrite the defaults by passing more arguments.
+```php
+echo number_format($number, 0, '.' , '_'); // 1_000_000_000
+```
+12. php manual can help you find new functions and explain you how they work and how to use them
+
+#### Redirect to another page using header
+1. header — Send a raw HTTP header <https://www.php.net/manual/en/function.header>
+2. void on a function means that is it not going to return a value.
+```php
+header ( string $header [, bool $replace = TRUE [, int $http_response_code ]] ) : void
+
+```
+3. Here an example of function that doesn't return a value
+```php
+/* This will give an error. Note the output
+ * above, which is before the header() call */
+header('Location: http://www.example.com/');
+exit;
+
+```
+4. This will set a header with Location: that will redirect us to another page.
+5. Create new page page.php
+5. On index.php write
+```php
+header('Location: /28-finding-php-functions/page.php');
+```
+6. When you reach page it will redirect to page.php
+```php
+echo "You are redirected here"; // You are redirected here
+```
+7. This is useful when submitting a form and registering an user.
+8. You can redirect them to homepage or error page etc.
+9. Always good idea to read the manual before you start using a php function.
+
+
+
+
+
+
+

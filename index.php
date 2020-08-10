@@ -35,6 +35,7 @@
         <li><a href="/25-post-and-get-superglobals">POST and GET superglobals</a></li>
         <li><a href="/26-ternary-operator">Ternary Operator</a></li>
         <li><a href="/27-commenting">Commenting</a></li>
+        <li><a href="/28-finding-php-functions">Finding PHP Functions</a></li>
     </ul>
 </body>
 </html>
